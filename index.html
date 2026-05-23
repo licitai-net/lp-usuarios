@@ -346,6 +346,19 @@
       overflow: hidden;
     }
 
+    .grid-surface::before {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      content: "";
+      pointer-events: none;
+      opacity: 0.42;
+      background-image:
+        linear-gradient(rgba(10, 18, 35, 0.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(10, 18, 35, 0.028) 1px, transparent 1px);
+      background-size: 36px 36px;
+    }
+
     .section-header-centered {
       text-align: center;
       max-width: 800px;
@@ -501,6 +514,25 @@
       background: #111b36;
     }
 
+    .hero-security-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 16px;
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 750;
+      animation: enterUp 700ms 360ms cubic-bezier(0.19, 1, 0.22, 1) both;
+    }
+
+    .hero-security-note svg {
+      width: 14px;
+      height: 14px;
+      color: var(--green-dark);
+      stroke-width: 2.2;
+    }
+
     /* Cartões de Métricas no Hero */
     .hero-metrics {
       display: grid;
@@ -567,8 +599,8 @@
     }
 
     /* --- SEÇÃO 2: POR QUE O LICITAÍ (RADAR & SLIDER) --- */
-    #porque-licitai {
-      background: #ffffff;
+    #como-funciona {
+      background: #f7fbf3;
       border-top: 1px solid rgba(226, 232, 240, 0.8);
       border-bottom: 1px solid rgba(226, 232, 240, 0.8);
       position: relative;
@@ -850,6 +882,7 @@
     /* --- SEÇÃO 4: PARA QUEM É (AUDIENCE) --- */
     .para-quem-section {
       background: #ffffff;
+      border-top: 1px solid rgba(226, 232, 240, 0.8);
       border-bottom: 1px solid rgba(226, 232, 240, 0.8);
     }
 
@@ -919,9 +952,10 @@
 
     /* --- SEÇÃO 5: PLANOS --- */
     .plans-section {
-      background: #f8fafc;
+      background: #f5f8fc;
       border-top: 1px solid rgba(226, 232, 240, 0.8);
       border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+      position: relative;
     }
 
     .plans-grid {
@@ -929,7 +963,7 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 20px;
       align-items: stretch;
-      margin-top: 16px;
+      margin-top: 32px;
     }
 
     .plan-card {
@@ -938,50 +972,62 @@
       flex-direction: column;
       background: #ffffff;
       border: 1px solid #e2e8f0;
+      border-left: 5px solid #dbe3ec;
       border-radius: 24px;
-      padding: 32px 28px;
+      padding: 32px 28px 32px 24px;
       transition: var(--transition);
-      overflow: hidden;
+      overflow: visible;
     }
 
     .plan-card::before {
-      position: absolute;
-      inset: 0 0 auto;
-      height: 5px;
-      content: "";
-      background: #dbe3ec;
+      content: none;
     }
 
     .plan-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 20px 40px rgba(8, 13, 29, 0.06);
       border-color: rgba(15, 23, 42, 0.12);
+      border-left-color: #cbd5e1;
     }
 
     .plan-card.popular {
       border-color: #a7e879;
+      border-left-color: var(--green-strong);
       background: #fbfff7;
       box-shadow: 0 18px 42px rgba(63, 126, 45, 0.08);
     }
 
+    .plan-card.popular:hover {
+      border-left-color: var(--green-strong);
+    }
+
     .plan-card.popular::before {
-      background: var(--green-strong);
+      content: none;
     }
 
     .popular-badge {
       position: absolute;
-      top: 22px;
-      right: 22px;
-      padding: 5px 10px;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      width: max-content;
+      max-width: calc(100% - 32px);
+      min-height: 26px;
+      padding: 0 14px;
       border-radius: 999px;
       background: var(--navy);
       color: #ffffff;
       font-family: var(--font-mono);
-      font-size: 9px;
+      font-size: 8.5px;
       font-weight: 800;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.7px;
       text-transform: uppercase;
       line-height: 1;
+      white-space: nowrap;
     }
 
     .plan-name {
@@ -1055,13 +1101,20 @@
       text-transform: uppercase;
       padding: 4px 10px;
       border-radius: 999px;
-      margin-bottom: 14px;
+      justify-content: center;
+      margin: 10px auto 0;
     }
 
     .plan-card.popular .plan-trial-tag {
-      background: rgba(191, 241, 151, 0.18);
-      border-color: rgba(191, 241, 151, 0.5);
-      color: #3a8a2a;
+      margin: 0;
+      padding: 0 0 0 9px;
+      border: 0;
+      border-left: 1px solid rgba(255, 255, 255, 0.32);
+      border-radius: 0;
+      background: transparent;
+      color: var(--green-strong);
+      font-size: inherit;
+      letter-spacing: inherit;
     }
 
     .plan-card .btn {
@@ -1193,7 +1246,8 @@
 
     /* --- SEÇÃO 7: BENEFÍCIOS & CADASTRO --- */
     #beneficios {
-      background: #ffffff;
+      background: linear-gradient(180deg, #ffffff 0%, #f6faf2 100%);
+      position: relative;
     }
 
     .solution-grid {
@@ -1488,9 +1542,10 @@
 
     /* --- SEÇÃO 8: FAQ --- */
     .faq-section {
-      background: #ffffff;
+      background: #f8fafc;
       border-top: 1px solid rgba(226, 232, 240, 0.8);
       border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+      position: relative;
     }
 
     .faq-list {
@@ -1900,6 +1955,13 @@
     }
 
     @media (max-width: 767px) {
+      .popular-badge {
+        max-width: calc(100% - 20px);
+        padding: 0 10px;
+        font-size: 7.6px;
+        letter-spacing: 0.35px;
+      }
+
       .hero-metrics {
         display: flex !important;
         flex-direction: row !important;
@@ -2033,7 +2095,7 @@
 
     /* --- SEÇÃO: WEB + APP --- */
     .app-section {
-      background: #ffffff;
+      background: #fbfcff;
       border-top: 1px solid rgba(226, 232, 240, 0.8);
       border-bottom: 1px solid rgba(226, 232, 240, 0.8);
       position: relative;
@@ -2056,21 +2118,21 @@
 
     .store-badges {
       display: flex;
-      gap: 12px;
-      margin-top: 28px;
+      gap: 14px;
+      margin-top: 30px;
       flex-wrap: wrap;
     }
 
     .store-badge {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      height: 44px;
-      padding: 0 16px;
+      gap: 12px;
+      height: 56px;
+      padding: 0 20px;
       background: #f1f5f9;
       /* Slate grey light */
       border: 1px solid #cbd5e1;
-      border-radius: 12px;
+      border-radius: 14px;
       /* Rounded square corners */
       color: var(--navy);
       text-decoration: none;
@@ -2087,8 +2149,8 @@
     }
 
     .store-badge svg {
-      width: 20px;
-      height: 20px;
+      width: 26px;
+      height: 26px;
       flex-shrink: 0;
       transition: transform 0.22s ease;
     }
@@ -2106,7 +2168,7 @@
     }
 
     .store-badge-text small {
-      font-size: 8px;
+      font-size: 9px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: #64748b;
@@ -2114,8 +2176,8 @@
     }
 
     .store-badge-text strong {
-      font-size: 13px;
-      font-weight: 700;
+      font-size: 16px;
+      font-weight: 800;
       color: var(--navy);
     }
 
@@ -2462,37 +2524,38 @@
       .mockup-wrapper .store-badges.mobile-only-badges {
         display: flex !important;
         /* Mostra os selos duplicados abaixo da pilha */
-        margin: 32px auto 0 !important;
+        margin: 34px auto 0 !important;
         /* Espaçamento limpo abaixo da pilha de notificações */
         justify-content: center !important;
         width: 100% !important;
-        max-width: 360px !important;
+        max-width: 420px !important;
         /* Aumentado para caber lado a lado */
-        gap: 8px !important;
+        gap: 10px !important;
         flex-wrap: nowrap !important;
         /* Força os selos lado a lado no mobile */
       }
 
       .mockup-wrapper .store-badges.mobile-only-badges .store-badge {
-        padding: 8px 12px !important;
+        min-height: 52px !important;
+        padding: 0 14px !important;
         /* Ajusta o padding para caber lado a lado no celular */
-        gap: 6px !important;
-        border-radius: 10px !important;
+        gap: 8px !important;
+        border-radius: 12px !important;
       }
 
       .mockup-wrapper .store-badges.mobile-only-badges .store-badge svg {
-        width: 16px !important;
+        width: 22px !important;
         /* Ícones ligeiramente mais compactos */
-        height: 16px !important;
+        height: 22px !important;
       }
 
       .mockup-wrapper .store-badges.mobile-only-badges .store-badge-text strong {
-        font-size: 11px !important;
+        font-size: 13px !important;
         /* Textos ligeiramente mais compactos */
       }
 
       .mockup-wrapper .store-badges.mobile-only-badges .store-badge-text small {
-        font-size: 8px !important;
+        font-size: 8.5px !important;
       }
     }
 
@@ -2718,15 +2781,7 @@
     }
 
     .app-closing-line {
-      text-align: center;
-      margin-top: 40px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--muted);
-      width: 100%;
+      display: none;
     }
 
     /* Estilos exclusivos para Mobile (Slide de 1 item) */
@@ -2747,6 +2802,7 @@
 
       .app-carousel-container {
         max-width: 640px !important;
+        border-top: 0 !important;
         padding: 0 48px !important;
         /* Space for absolute navigation arrows */
       }
@@ -2784,6 +2840,7 @@
       .carousel-dots {
         display: flex !important;
         /* Visible on mobile */
+        margin-top: 22px;
       }
     }
 
@@ -2825,7 +2882,7 @@
       </a>
 
       <ul class="nav-menu">
-        <li><a href="#porque-licitai" class="nav-link">O Licitaí</a></li>
+        <li><a href="#como-funciona" class="nav-link">O Licitaí</a></li>
         <li><a href="#como-funciona" class="nav-link">Como funciona</a></li>
         <li><a href="#para-quem" class="nav-link">Para quem é</a></li>
         <li><a href="#planos" class="nav-link">Planos</a></li>
@@ -2846,7 +2903,7 @@
 
   <nav class="mobile-drawer" id="mobileDrawer" aria-label="Menu mobile">
     <ul class="nav-menu">
-      <li><a href="#porque-licitai" class="nav-link">O Licitaí</a></li>
+      <li><a href="#como-funciona" class="nav-link">O Licitaí</a></li>
       <li><a href="#como-funciona" class="nav-link">Como funciona</a></li>
       <li><a href="#para-quem" class="nav-link">Para quem é</a></li>
       <li><a href="#planos" class="nav-link">Planos</a></li>
@@ -2867,6 +2924,14 @@
           para que você gaste energia só em contratos que valem a pena.
         </p>
         <a href="#cadastro" class="hero-cta-btn">Garantir acesso antecipado</a>
+        <div class="hero-security-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+            aria-hidden="true">
+            <rect x="5" y="11" width="14" height="9" rx="2" />
+            <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+          </svg>
+          <span>Sem spam · Seus dados estão protegidos</span>
+        </div>
 
         <!-- Cartões de Métricas -->
         <div class="hero-metrics">
@@ -2895,7 +2960,7 @@
     </section>
 
     <!-- SEÇÃO 2: COMO FUNCIONA (TECNOLOGIA & RECURSOS INTEGRADOS) -->
-    <section id="como-funciona">
+    <section id="como-funciona" class="grid-surface">
       <div class="container">
         <div class="section-header-centered" style="margin-bottom: 56px;">
           <div class="badge-kicker">Tecnologia &amp; Recursos</div>
@@ -3069,7 +3134,7 @@
     </section>
 
     <!-- SEÇÃO: WEB + APP -->
-    <section class="app-section" id="web-app">
+    <section class="app-section grid-surface" id="web-app">
       <div class="container">
 
         <div class="app-showcase">
@@ -3286,15 +3351,11 @@
         <!-- Dots de Progresso -->
         <div class="carousel-dots" id="carouselDots"></div>
       </div>
-
-      <div class="app-closing-line">
-        * Sincronização automática em tempo real, sempre. *
-      </div>
       </div>
     </section>
 
     <!-- SEÇÃO 5: PLANOS -->
-    <section class="plans-section" id="planos">
+    <section class="plans-section grid-surface" id="planos">
       <div class="container">
         <div class="section-header-centered">
           <div class="badge-kicker">Planos</div>
@@ -3355,14 +3416,16 @@
 
           <!-- Plano Pro -->
           <article class="plan-card popular" data-plan-card="2">
-            <span class="popular-badge">Mais popular</span>
+            <span class="popular-badge">
+              Mais popular
+              <span class="plan-trial-tag">
+                <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#bff197">
+                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+                Acesso antecipado
+              </span>
+            </span>
             <div class="plan-name">Pro</div>
-            <div class="plan-trial-tag">
-              <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#4a9e36">
-                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-              </svg>
-              30 dias grátis
-            </div>
             <h3 class="plan-price">R$ 197/mês</h3>
             <p class="plan-promise">"O Licitaí acompanha, analisa e avisa tudo em tempo real."</p>
             <ul class="plan-list">
@@ -3417,7 +3480,7 @@
     </section>
 
     <!-- SEÇÃO 7: BENEFÍCIOS & CADASTRO -->
-    <section id="beneficios">
+    <section id="beneficios" class="grid-surface">
       <div class="container">
         <div class="solution-grid">
 
@@ -3544,12 +3607,12 @@
                 </div>
                 <div class="form-field">
                   <label for="email">E-mail</label>
-                  <input id="email" name="email" type="email" placeholder="nome@suaempresa.com.br" required
+                  <input id="email" name="email" type="email" placeholder="seuemail@exemplo.com" required
                     autocomplete="email" />
                 </div>
                 <div class="form-field">
-                  <label for="telefone">WhatsApp</label>
-                  <input id="telefone" name="telefone" type="tel" placeholder="(11) 99999-0000" required
+                  <label for="whatsapp">WhatsApp</label>
+                  <input id="whatsapp" name="whatsapp" type="tel" placeholder="(11) 99999-0000" required
                     autocomplete="tel" />
                 </div>
 
@@ -3596,7 +3659,7 @@
     </section>
 
     <!-- SEÇÃO 8: FAQ -->
-    <section class="faq-section" id="faq">
+    <section class="faq-section grid-surface" id="faq">
       <div class="container">
         <div class="section-header-centered">
           <h2 class="title-lg">Perguntas frequentes</h2>
@@ -3653,7 +3716,7 @@
         <div class="footer-col">
           <h4>Navegação</h4>
           <ul class="footer-links-list">
-            <li><a href="#porque-licitai" class="footer-link">O Licitaí</a></li>
+            <li><a href="#como-funciona" class="footer-link">O Licitaí</a></li>
             <li><a href="#como-funciona" class="footer-link">Como funciona</a></li>
             <li><a href="#planos" class="footer-link">Planos</a></li>
           </ul>
@@ -3929,8 +3992,8 @@
       });
     }
 
-    // Mostrar o botão do menu apenas a partir da Seção 2 (#porque-licitai)
-    const porqueLicitaiSection = document.getElementById("porque-licitai");
+    // Mostrar o botão do menu apenas a partir da Seção 2 (#como-funciona)
+    const porqueLicitaiSection = document.getElementById("como-funciona");
     const headerCtaWrapper = document.querySelector(".header-cta-wrapper");
 
     function checkHeaderCtaVisibility() {
@@ -4141,7 +4204,7 @@
 
       const nomeVal = document.getElementById("nome")?.value.trim() || "";
       const emailVal = document.getElementById("email")?.value.trim() || "";
-      const telVal = document.getElementById("telefone")?.value.trim() || "";
+      const whatsappVal = document.getElementById("whatsapp")?.value.trim() || "";
 
       btnSubmitForm.disabled = true;
       const originalText = btnSubmitForm.textContent;
@@ -4159,7 +4222,7 @@
           body: JSON.stringify({
             nome: nomeVal,
             email: emailVal,
-            whatsapp: telVal
+            whatsapp: whatsappVal
           })
         });
 
