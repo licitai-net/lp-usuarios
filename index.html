@@ -1,0 +1,1654 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Licitaí | Plataforma para Licitantes</title>
+  <meta name="description"
+    content="O Licitaí monitora o PNCP em tempo real, analisa editais com IA e avisa você no momento certo." />
+  <link rel="icon" type="image/png" href="./brand/licitai_icon_preto.png" />
+  <link rel="apple-touch-icon" href="./brand/licitai_icon_preto.png" />
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@500;600;700&display=swap");
+
+    :root {
+      --navy: #080d1d;
+      --navy-2: #101a34;
+      --ink: #111827;
+      --muted: #64748b;
+      --soft: #f6f8fb;
+      --line: #e2e8f0;
+      --green: #ddfac8;
+      --green-strong: #bff197;
+      --green-dark: #3f7e2d;
+      --gold: #e8b52c;
+      --white: #ffffff;
+      --shadow: 0 18px 42px rgba(8, 13, 29, 0.07);
+      --shadow-flat: 0 1px 0 rgba(8, 13, 29, 0.04);
+      --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-mono: "IBM Plex Mono", monospace;
+      --transition: all 0.28s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 92px;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      background:
+        linear-gradient(180deg, #ffffff 0%, #f7fafc 52%, #ffffff 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      content: "";
+      pointer-events: none;
+      opacity: 0.58;
+      background-image:
+        linear-gradient(rgba(10, 18, 35, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(10, 18, 35, 0.045) 1px, transparent 1px);
+      background-size: 36px 36px;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 20;
+      height: 78px;
+      border-bottom: 1px solid rgba(226, 232, 240, 0.95);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      gap: 24px;
+    }
+
+    .logo-link {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      display: block;
+      width: auto;
+      height: 32px;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      list-style: none;
+    }
+
+    .nav-link {
+      position: relative;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .nav-link::after {
+      position: absolute;
+      left: 0;
+      bottom: -7px;
+      width: 0;
+      height: 2px;
+      content: "";
+      border-radius: 999px;
+      background: var(--navy);
+      transition: var(--transition);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 24px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      background: var(--navy);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 850;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      box-shadow: 0 12px 24px rgba(8, 13, 29, 0.16);
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      background: var(--navy-2);
+      box-shadow: 0 16px 34px rgba(8, 13, 29, 0.22);
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--navy);
+      border-color: var(--line);
+      box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+      background: #f8fafc;
+      box-shadow: 0 14px 30px rgba(8, 13, 29, 0.08);
+    }
+
+    .hamburger-btn {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border: 0;
+      border-radius: 12px;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .hamburger-icon,
+    .hamburger-icon::before,
+    .hamburger-icon::after {
+      display: block;
+      width: 22px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--navy);
+      transition: var(--transition);
+    }
+
+    .hamburger-icon {
+      position: relative;
+      margin: 0 auto;
+    }
+
+    .hamburger-icon::before,
+    .hamburger-icon::after {
+      position: absolute;
+      left: 0;
+      content: "";
+    }
+
+    .hamburger-icon::before {
+      top: -7px;
+    }
+
+    .hamburger-icon::after {
+      top: 7px;
+    }
+
+    body.menu-open .hamburger-icon {
+      background: transparent;
+    }
+
+    body.menu-open .hamburger-icon::before {
+      top: 0;
+      transform: rotate(45deg);
+    }
+
+    body.menu-open .hamburger-icon::after {
+      top: 0;
+      transform: rotate(-45deg);
+    }
+
+    .mobile-drawer {
+      position: fixed;
+      top: 78px;
+      right: -100%;
+      z-index: 18;
+      display: none;
+      width: 100%;
+      max-width: 340px;
+      height: calc(100vh - 78px);
+      padding: 32px;
+      border-left: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: -20px 0 50px rgba(8, 13, 29, 0.1);
+      transition: var(--transition);
+    }
+
+    body.menu-open .mobile-drawer {
+      right: 0;
+    }
+
+    .mobile-drawer .nav-menu {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .mobile-drawer .btn {
+      width: 100%;
+      margin-top: 28px;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 78px 0 0;
+      z-index: 17;
+      opacity: 0;
+      pointer-events: none;
+      background: rgba(8, 13, 29, 0.34);
+      backdrop-filter: blur(4px);
+      transition: var(--transition);
+    }
+
+    body.menu-open .overlay {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 112px 0;
+      overflow: hidden;
+    }
+
+    .section-header {
+      max-width: 800px;
+      margin: 0 auto 58px;
+      text-align: center;
+    }
+
+    .section-header-left {
+      max-width: 720px;
+      margin-bottom: 48px;
+    }
+
+    .badge-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-flat);
+    }
+
+    .badge-kicker::before {
+      width: 8px;
+      height: 8px;
+      content: "";
+      border-radius: 999px;
+      background: var(--green-strong);
+      box-shadow: 0 0 0 5px rgba(221, 250, 200, 0.8);
+    }
+
+    .eyebrow-gap {
+      margin-bottom: 18px;
+    }
+
+    .title-xl,
+    .title-lg {
+      color: var(--navy);
+      font-weight: 900;
+      letter-spacing: -0.035em;
+    }
+
+    .title-xl {
+      max-width: 780px;
+      margin: 0 0 24px;
+      font-size: clamp(42px, 5.6vw, 72px);
+      line-height: 1.03;
+    }
+
+    .title-lg {
+      margin-bottom: 16px;
+      font-size: clamp(32px, 3.8vw, 46px);
+      line-height: 1.12;
+    }
+
+    .text-lead {
+      color: #4b5563;
+      font-size: clamp(16px, 1.45vw, 20px);
+      font-weight: 550;
+      line-height: 1.55;
+    }
+
+    .hero-section {
+      display: flex;
+      align-items: center;
+      min-height: 92vh;
+      padding-top: 146px;
+      padding-bottom: 98px;
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+      align-items: center;
+      gap: 58px;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .hero-copy {
+      text-align: left;
+    }
+
+    .hero-sub {
+      max-width: 720px;
+      margin: 0 0 34px;
+      color: #4b5563;
+      font-size: clamp(17px, 1.55vw, 22px);
+      font-weight: 550;
+      line-height: 1.5;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .hero-panel {
+      position: relative;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: #ffffff;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-panel::before {
+      position: absolute;
+      inset: 18px auto auto -18px;
+      width: 42px;
+      height: 220px;
+      content: "";
+      border-radius: 999px;
+      background: var(--green-strong);
+      opacity: 0.65;
+    }
+
+    .dashboard-card {
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      border: 1px solid #dbe3ec;
+      border-radius: 18px;
+      background: #f8fafc;
+    }
+
+    .dashboard-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px;
+      border-bottom: 1px solid #dbe3ec;
+      background: #ffffff;
+    }
+
+    .dashboard-title {
+      color: var(--navy);
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+    }
+
+    .dashboard-status {
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--green);
+      color: var(--green-dark);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .opportunity-list {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+    }
+
+    .opportunity-row {
+      display: grid;
+      grid-template-columns: 42px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      background: #ffffff;
+    }
+
+    .opportunity-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: var(--green);
+      color: var(--green-dark);
+    }
+
+    .opportunity-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 2.1;
+    }
+
+    .opportunity-name {
+      display: block;
+      color: var(--navy);
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    .opportunity-meta {
+      display: block;
+      margin-top: 3px;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .opportunity-score {
+      color: var(--navy);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .dashboard-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      border-top: 1px solid #dbe3ec;
+      background: #dbe3ec;
+    }
+
+    .summary-item {
+      padding: 16px;
+      background: #ffffff;
+    }
+
+    .summary-value {
+      display: block;
+      color: var(--navy);
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .summary-label {
+      display: block;
+      margin-top: 2px;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 750;
+    }
+
+    .microcopy {
+      color: #6b7280;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .numbers-section,
+    .audience-section,
+    .features-section,
+    .faq-section {
+      background: #ffffff;
+      border-top: 1px solid rgba(226, 232, 240, 0.9);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .metric-card,
+    .audience-card,
+    .feature-card,
+    .plan-card,
+    .social-card,
+    .faq-item,
+    .flow-card {
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      box-shadow: var(--shadow-flat);
+    }
+
+    .metric-card {
+      position: relative;
+      min-height: 178px;
+      padding: 26px;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .metric-card::before {
+      position: absolute;
+      inset: 0 0 auto;
+      height: 4px;
+      content: "";
+      background: var(--green-strong);
+    }
+
+    .metric-label {
+      display: inline-flex;
+      margin-bottom: 18px;
+      padding: 5px 9px;
+      border-radius: 8px;
+      background: #effbe7;
+      color: var(--green-dark);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .metric-value {
+      margin-bottom: 10px;
+      color: var(--navy);
+      font-size: clamp(30px, 3.3vw, 42px);
+      font-weight: 900;
+      line-height: 1.04;
+      letter-spacing: -0.04em;
+    }
+
+    .metric-context {
+      color: #64748b;
+      font-size: 14px;
+      font-weight: 650;
+      line-height: 1.4;
+    }
+
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+
+    .audience-card {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      min-height: 410px;
+      padding: 36px;
+      border-radius: 18px;
+    }
+
+    .audience-card h3,
+    .feature-card h3,
+    .plan-card h3,
+    .flow-card h3 {
+      color: var(--navy);
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .audience-quote {
+      color: #4b5563;
+      font-size: 17px;
+      font-weight: 650;
+      line-height: 1.55;
+    }
+
+    .check-list,
+    .plan-list {
+      display: grid;
+      gap: 12px;
+      list-style: none;
+    }
+
+    .check-list li,
+    .plan-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: #334155;
+      font-size: 15px;
+      font-weight: 650;
+    }
+
+    .check-list li::before,
+    .plan-list li::before {
+      flex: 0 0 auto;
+      content: "✓";
+      color: var(--navy);
+      font-weight: 900;
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      background: var(--green);
+      text-align: center;
+      line-height: 20px;
+      font-size: 12px;
+    }
+
+    .how-section {
+      background:
+        linear-gradient(135deg, #080d1d 0%, #101a34 64%, #18314a 100%);
+      color: #ffffff;
+    }
+
+    .how-section .title-lg,
+    .how-section .text-lead {
+      color: #ffffff;
+    }
+
+    .how-section .text-lead {
+      color: #cbd5e1;
+    }
+
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .flow-card {
+      min-height: 334px;
+      padding: 24px 22px;
+      border-color: rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.07);
+      box-shadow: none;
+    }
+
+    .flow-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      margin-bottom: 28px;
+      border: 1px solid rgba(191, 241, 151, 0.38);
+      border-radius: 12px;
+      color: var(--green-strong);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .flow-card h3 {
+      margin-bottom: 14px;
+      color: #ffffff;
+      font-size: 18px;
+    }
+
+    .flow-card p {
+      color: #cbd5e1;
+      font-size: 14px;
+      font-weight: 550;
+      line-height: 1.55;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .feature-card {
+      min-height: 250px;
+      padding: 28px;
+      border-radius: 18px;
+      transition: var(--transition);
+    }
+
+    .feature-card:hover,
+    .plan-card:hover,
+    .audience-card:hover,
+    .metric-card:hover {
+      transform: translateY(-2px);
+      border-color: #cbd5e1;
+      box-shadow: var(--shadow);
+    }
+
+    .feature-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      margin-bottom: 22px;
+      border-radius: 14px;
+      background: #effbe7;
+      color: var(--green-dark);
+    }
+
+    .feature-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 2.2;
+    }
+
+    .plans-section {
+      background: #f8fafc;
+      border-top: 1px solid rgba(226, 232, 240, 0.9);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+    }
+
+    .feature-card h3 {
+      margin-bottom: 10px;
+      font-size: 19px;
+    }
+
+    .feature-card p {
+      color: #526072;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.52;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .plan-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 628px;
+      padding: 30px;
+      border-radius: 18px;
+      transition: var(--transition);
+      overflow: hidden;
+    }
+
+    .plan-card::before {
+      position: absolute;
+      inset: 0 0 auto;
+      height: 5px;
+      content: "";
+      background: #dbe3ec;
+    }
+
+    .plan-card.popular {
+      border-color: #a7e879;
+      background: #fbfff7;
+      box-shadow: 0 18px 42px rgba(63, 126, 45, 0.12);
+    }
+
+    .plan-card.popular::before {
+      background: var(--green-strong);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: 22px;
+      right: 22px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: var(--navy);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .plan-name {
+      margin-bottom: 12px;
+      color: var(--green-dark);
+      font-size: 13px;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .plan-price {
+      margin-bottom: 14px;
+      color: var(--navy);
+      font-size: clamp(32px, 3.1vw, 44px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .plan-card:first-child .plan-price {
+      color: var(--green-dark);
+    }
+
+    .plan-promise {
+      min-height: 78px;
+      margin-bottom: 24px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid #e2e8f0;
+      color: #526072;
+      font-size: 14.5px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .plan-list {
+      margin-bottom: 28px;
+    }
+
+    .plan-list li {
+      font-size: 13.5px;
+      line-height: 1.42;
+    }
+
+    .plan-card .btn {
+      width: 100%;
+      margin-top: auto;
+    }
+
+    .social-section {
+      padding: 112px 0;
+      background: #f6faf2;
+    }
+
+    .social-card {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 46px;
+      border-radius: 18px;
+      text-align: center;
+    }
+
+    .social-card strong {
+      color: var(--navy);
+    }
+
+    .social-card p {
+      margin-bottom: 28px;
+      color: #334155;
+      font-size: clamp(18px, 2vw, 24px);
+      font-weight: 750;
+      line-height: 1.45;
+    }
+
+    .faq-list {
+      display: grid;
+      max-width: 920px;
+      margin: 0 auto;
+      gap: 14px;
+    }
+
+    .faq-item {
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .faq-item summary {
+      padding: 22px 24px;
+      color: var(--navy);
+      font-size: 17px;
+      font-weight: 850;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-item summary::after {
+      float: right;
+      content: "+";
+      color: var(--green-dark);
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .faq-item[open] summary::after {
+      content: "-";
+    }
+
+    .faq-item p {
+      padding: 0 24px 24px;
+      color: #526072;
+      font-size: 15.5px;
+      font-weight: 600;
+      line-height: 1.55;
+    }
+
+    .final-cta {
+      padding: 120px 0;
+      text-align: center;
+      background:
+        linear-gradient(135deg, #080d1d 0%, #101a34 100%);
+      color: #ffffff;
+    }
+
+    .final-cta .title-lg,
+    .final-cta .text-lead {
+      color: #ffffff;
+    }
+
+    .final-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .final-cta .btn {
+      background: var(--green-strong);
+      color: var(--navy);
+      box-shadow: 0 18px 38px rgba(191, 241, 151, 0.16);
+    }
+
+    .final-link {
+      color: #cbd5e1;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .site-footer {
+      position: relative;
+      z-index: 2;
+      padding: 34px 0;
+      background: #030712;
+      color: #94a3b8;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .footer-logo {
+      width: auto;
+      height: 28px;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 42px;
+      }
+
+      .hero-copy {
+        text-align: center;
+      }
+
+      .title-xl,
+      .hero-sub {
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .hero-actions {
+        align-items: center;
+      }
+
+      .hero-panel {
+        max-width: 640px;
+        margin: 0 auto;
+      }
+
+      .metrics-grid,
+      .plans-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .flow-grid,
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .plan-card {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .site-header .nav-menu,
+      .site-header .header-cta {
+        display: none;
+      }
+
+      .hamburger-btn,
+      .mobile-drawer {
+        display: block;
+      }
+
+      section {
+        padding: 76px 0;
+      }
+
+      .hero-section {
+        min-height: auto;
+        padding-top: 132px;
+      }
+
+      .hero-panel::before {
+        display: none;
+      }
+
+      .audience-grid,
+      .features-grid,
+      .flow-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .audience-card {
+        min-height: auto;
+        padding: 28px;
+      }
+
+      .flow-card {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 0 18px;
+      }
+
+      .title-xl {
+        font-size: clamp(38px, 13vw, 52px);
+        letter-spacing: -0.04em;
+      }
+
+      .title-lg {
+        font-size: clamp(29px, 10vw, 38px);
+      }
+
+      .metrics-grid,
+      .plans-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metric-card {
+        min-height: auto;
+      }
+
+      .social-card {
+        padding: 30px 22px;
+      }
+
+      .final-actions,
+      .hero-actions {
+        align-items: stretch;
+      }
+
+      .hero-actions .btn,
+      .final-actions .btn {
+        width: 100%;
+      }
+
+      .opportunity-row {
+        grid-template-columns: 38px 1fr;
+      }
+
+      .opportunity-score {
+        grid-column: 2;
+      }
+
+      .dashboard-summary {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a href="#hero" class="logo-link" aria-label="Licitaí">
+        <img class="logo-img" src="./brand/licitai_preta.png" alt="Licitaí" />
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="#para-quem" class="nav-link">Para quem é</a></li>
+        <li><a href="#como-funciona" class="nav-link">Como funciona</a></li>
+        <li><a href="#recursos" class="nav-link">Recursos</a></li>
+        <li><a href="#planos" class="nav-link">Planos</a></li>
+        <li><a href="#faq" class="nav-link">FAQ</a></li>
+      </ul>
+
+      <a href="#planos" class="btn header-cta">Começar grátis</a>
+
+      <button class="hamburger-btn" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">
+        <span class="hamburger-icon"></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="overlay" id="menuOverlay"></div>
+  <nav class="mobile-drawer" id="mobileDrawer" aria-label="Menu mobile">
+    <ul class="nav-menu">
+      <li><a href="#para-quem" class="nav-link">Para quem é</a></li>
+      <li><a href="#como-funciona" class="nav-link">Como funciona</a></li>
+      <li><a href="#recursos" class="nav-link">Recursos</a></li>
+      <li><a href="#planos" class="nav-link">Planos</a></li>
+      <li><a href="#faq" class="nav-link">FAQ</a></li>
+    </ul>
+    <a href="#planos" class="btn">Começar grátis</a>
+  </nav>
+
+  <main>
+    <section class="hero-section" id="hero">
+      <div class="container hero-content">
+        <div class="hero-copy">
+          <div class="badge-kicker eyebrow-gap">Plataforma para licitantes</div>
+          <h1 class="title-xl">O edital certo. A análise pronta. O prazo nunca perdido.</h1>
+          <p class="hero-sub">
+            O Licitaí monitora o PNCP em tempo real, analisa editais com IA e avisa você no momento certo
+            para que você gaste energia só em contratos que valem a pena.
+          </p>
+          <div class="hero-actions">
+            <a href="#planos" class="btn">Começar grátis</a>
+            <p class="microcopy">Sem cartão de crédito · Cancele quando quiser</p>
+          </div>
+        </div>
+
+        <div class="hero-panel" aria-label="Prévia do painel Licitaí">
+          <div class="dashboard-card">
+            <div class="dashboard-top">
+              <span class="dashboard-title">Radar de oportunidades</span>
+              <span class="dashboard-status">Ao vivo</span>
+            </div>
+            <div class="opportunity-list">
+              <div class="opportunity-row">
+                <span class="opportunity-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M4 7h16" />
+                    <path d="M7 7v13" />
+                    <path d="M17 7v13" />
+                    <path d="M9 4h6l2 3H7l2-3Z" />
+                  </svg>
+                </span>
+                <span>
+                  <span class="opportunity-name">Pregão eletrônico identificado</span>
+                  <span class="opportunity-meta">Objeto aderente · prazo em 6 dias</span>
+                </span>
+                <span class="opportunity-score">92%</span>
+              </div>
+
+              <div class="opportunity-row">
+                <span class="opportunity-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M6 4h12v16H6z" />
+                    <path d="M9 8h6" />
+                    <path d="M9 12h6" />
+                    <path d="M9 16h3" />
+                  </svg>
+                </span>
+                <span>
+                  <span class="opportunity-name">Edital analisado pela IA</span>
+                  <span class="opportunity-meta">3 riscos · 4 exigências críticas</span>
+                </span>
+                <span class="opportunity-score">4 min</span>
+              </div>
+
+              <div class="opportunity-row">
+                <span class="opportunity-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+                    <path d="M10 21h4" />
+                  </svg>
+                </span>
+                <span>
+                  <span class="opportunity-name">Alerta de prazo enviado</span>
+                  <span class="opportunity-meta">Push · e-mail · WhatsApp</span>
+                </span>
+                <span class="opportunity-score">Agora</span>
+              </div>
+            </div>
+            <div class="dashboard-summary">
+              <span class="summary-item">
+                <span class="summary-value">18</span>
+                <span class="summary-label">matches úteis</span>
+              </span>
+              <span class="summary-item">
+                <span class="summary-value">7</span>
+                <span class="summary-label">em preparação</span>
+              </span>
+              <span class="summary-item">
+                <span class="summary-value">R$ 2,4 mi</span>
+                <span class="summary-label">mapeados</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="numbers-section" id="numeros">
+      <div class="container">
+        <div class="metrics-grid">
+          <article class="metric-card">
+            <span class="metric-label">Total anual 2025</span>
+            <div class="metric-value">R$ 1,3 tri</div>
+            <p class="metric-context">Em compras públicas federais</p>
+          </article>
+
+          <article class="metric-card">
+            <span class="metric-label">Até maio/2026</span>
+            <div class="metric-value">481,7 mil</div>
+            <p class="metric-context">Processos para ME/EPP</p>
+          </article>
+
+          <article class="metric-card">
+            <span class="metric-label">Editais/dia</span>
+            <div class="metric-value">+3.200</div>
+            <p class="metric-context">Publicados no PNCP</p>
+          </article>
+
+          <article class="metric-card">
+            <span class="metric-label">Economia média</span>
+            <div class="metric-value">23%</div>
+            <p class="metric-context">Em propostas com análise prévia</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="audience-section" id="para-quem">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="title-lg">O Licitaí foi feito para você?</h2>
+        </div>
+
+        <div class="audience-grid">
+          <article class="audience-card">
+            <h3>Quem já lícita</h3>
+            <p class="audience-quote">
+              "Você já participa de licitações mas perde tempo lendo editais irrelevantes, esquece prazos
+              e não tem visão clara de quais oportunidades realmente valem."
+            </p>
+            <ul class="check-list">
+              <li>Organiza suas oportunidades em um lugar só</li>
+              <li>Analisa o edital antes de você gastar uma hora lendo</li>
+              <li>Avisa quando o prazo está chegando</li>
+              <li>Encontra o fornecedor certo para formar preço</li>
+            </ul>
+          </article>
+
+          <article class="audience-card">
+            <h3>Quem quer começar</h3>
+            <p class="audience-quote">
+              "Você sabe que o governo compra muito, mas nunca entrou nesse mercado porque parece complicado,
+              burocrático e cheio de armadilhas."
+            </p>
+            <ul class="check-list">
+              <li>Busca simples e rápida no PNCP</li>
+              <li>IA explica o edital em linguagem acessível</li>
+              <li>Checklist guiado para não errar o processo</li>
+              <li>Suporte para dar o primeiro passo com segurança</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="how-section" id="como-funciona">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge-kicker eyebrow-gap">Tecnologia</div>
+          <h2 class="title-lg">Veja o Licitaí trabalhando por você</h2>
+          <p class="text-lead">
+            Da publicação do edital até a cotação com o fornecedor, tudo em um fluxo inteligente.
+          </p>
+        </div>
+
+        <div class="flow-grid">
+          <article class="flow-card">
+            <div class="flow-number">01</div>
+            <h3>Monitoramento contínuo</h3>
+            <p>Nossa IA varre o PNCP, o Diário Oficial e portais públicos 24 horas por dia. Nenhum edital do seu segmento passa despercebido.</p>
+          </article>
+
+          <article class="flow-card">
+            <div class="flow-number">02</div>
+            <h3>Filtro inteligente</h3>
+            <p>Filtramos por objeto, região, valor estimado e histórico de resultado. Você recebe só o que tem aderência real com o seu negócio.</p>
+          </article>
+
+          <article class="flow-card">
+            <div class="flow-number">03</div>
+            <h3>Análise do edital</h3>
+            <p>A IA lê o edital completo, identifica riscos, exigências técnicas, prazos críticos e gera um resumo executivo em minutos.</p>
+          </article>
+
+          <article class="flow-card">
+            <div class="flow-number">04</div>
+            <h3>Alerta no momento certo</h3>
+            <p>Push, e-mail e WhatsApp quando surgir uma oportunidade relevante, quando um prazo estiver se aproximando ou quando um edital for atualizado.</p>
+          </article>
+
+          <article class="flow-card">
+            <div class="flow-number">05</div>
+            <h3>Conexão com fornecedor</h3>
+            <p>Quando precisar formar preço, o Licitaí encontra fornecedores qualificados do seu segmento e região. Você negocia direto, sem intermediários.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="features-section" id="recursos">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge-kicker eyebrow-gap">Recursos</div>
+          <h2 class="title-lg">Tudo que você precisa para operar com inteligência</h2>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card">
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <circle cx="11" cy="11" r="7" />
+                <path d="m16 16 4 4" />
+              </svg>
+            </span>
+            <h3>Busca avançada no PNCP</h3>
+            <p>Filtros por objeto, modalidade, órgão, UF, valor e prazo. Resultados em segundos.</p>
+          </article>
+
+          <article class="feature-card">
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <rect x="5" y="7" width="14" height="12" rx="3" />
+                <path d="M12 3v4" />
+                <path d="M9 12h.01" />
+                <path d="M15 12h.01" />
+                <path d="M9 16h6" />
+              </svg>
+            </span>
+            <h3>Análise IA de edital</h3>
+            <p>Resumo executivo, identificação de riscos, exigências técnicas e pontos de atenção gerados automaticamente.</p>
+          </article>
+
+          <article class="feature-card">
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M5 5h14v10H8l-3 4V5Z" />
+                <path d="M9 9h6" />
+                <path d="M9 12h4" />
+              </svg>
+            </span>
+            <h3>Chat sobre o edital</h3>
+            <p>Pergunte qualquer coisa sobre o edital em linguagem natural. A IA responde com base no documento oficial.</p>
+          </article>
+
+          <article class="feature-card">
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="m12 4 2.4 5 5.6.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.6-.8L12 4Z" />
+              </svg>
+            </span>
+            <h3>Favoritos e monitoramento</h3>
+            <p>Salve oportunidades, acompanhe atualizações e organize por status: em análise, em preparação, enviado, ganho.</p>
+          </article>
+
+          <article class="feature-card">
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+                <path d="M10 21h4" />
+              </svg>
+            </span>
+            <h3>Push inteligente</h3>
+            <p>Alertas de prazo, atualização de edital, match urgente e resultado da licitação no app e no WhatsApp.</p>
+          </article>
+
+          <article class="feature-card">
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M8 5h8" />
+                <path d="M9 3h6v4H9z" />
+                <path d="M6 5H5v16h14V5h-1" />
+                <path d="m8 13 2 2 5-5" />
+                <path d="M8 18h8" />
+              </svg>
+            </span>
+            <h3>Checklist de participação</h3>
+            <p>Guia passo a passo para preparar a proposta corretamente e não perder por erro documental.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="plans-section" id="planos">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge-kicker eyebrow-gap">Planos</div>
+          <h2 class="title-lg">Comece grátis. Escale quando precisar.</h2>
+          <p class="text-lead">
+            Do primeiro edital até operações de alto volume, o Licitaí acompanha o seu crescimento.
+          </p>
+        </div>
+
+        <div class="plans-grid">
+          <article class="plan-card">
+            <div class="plan-name">Free</div>
+            <h3 class="plan-price">Grátis</h3>
+            <p class="plan-promise">"Explore o mercado antes de comprometer."</p>
+            <ul class="plan-list">
+              <li>Busca rápida no PNCP</li>
+              <li>Filtros básicos</li>
+              <li>Visualização de detalhes principais</li>
+              <li>5 favoritos</li>
+              <li>1 análise IA por mês</li>
+              <li>5 perguntas no chat</li>
+              <li>Somente web</li>
+            </ul>
+            <a href="#cta-final" class="btn btn-secondary">Começar grátis</a>
+          </article>
+
+          <article class="plan-card">
+            <div class="plan-name">Start</div>
+            <h3 class="plan-price">R$ 67/mês</h3>
+            <p class="plan-promise">"Organize suas oportunidades e não perca mais prazos."</p>
+            <ul class="plan-list">
+              <li>Tudo do Free</li>
+              <li>Acesso web completo</li>
+              <li>App mobile limitado</li>
+              <li>Favoritos e monitoramento ilimitados</li>
+              <li>Push de alertas de prazo</li>
+              <li>8 análises IA por mês</li>
+              <li>30 perguntas mensais no chat</li>
+            </ul>
+            <a href="#cta-final" class="btn">Assinar Start</a>
+          </article>
+
+          <article class="plan-card popular">
+            <span class="popular-badge">Mais popular</span>
+            <div class="plan-name">Pro</div>
+            <h3 class="plan-price">R$ 197/mês</h3>
+            <p class="plan-promise">"O Licitaí acompanha, analisa e avisa tudo em tempo real."</p>
+            <ul class="plan-list">
+              <li>Tudo do Start</li>
+              <li>App completo com todas as funcionalidades</li>
+              <li>Chat ativo no app</li>
+              <li>Análise IA no app</li>
+              <li>Checklist completo no app</li>
+              <li>50 análises IA por mês</li>
+              <li>300 perguntas mensais</li>
+              <li>Push completo: prazo, match urgente, atualização, resultado</li>
+              <li>Prioridade de processamento</li>
+            </ul>
+            <a href="#cta-final" class="btn">Assinar Pro</a>
+          </article>
+
+          <article class="plan-card">
+            <div class="plan-name">Plus</div>
+            <h3 class="plan-price">R$ 397/mês</h3>
+            <p class="plan-promise">"Para operações com alto volume que não podem errar."</p>
+            <ul class="plan-list">
+              <li>Tudo do Pro</li>
+              <li>150 análises IA por mês</li>
+              <li>1.000 perguntas mensais</li>
+              <li>Limites ampliados de favoritos e monitoramento</li>
+              <li>Prioridade máxima de processamento</li>
+              <li>Exportações e relatórios</li>
+              <li>Acesso ampliado a cotações e parceiros</li>
+            </ul>
+            <a href="#cta-final" class="btn">Assinar Plus</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="social-section" id="prova-social">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="title-lg">Quem já está dentro</h2>
+        </div>
+        <div class="social-card">
+          <p>
+            <strong>[X]+ licitantes já estão na fila de acesso</strong> de empresas iniciantes a operações
+            com dezenas de editais ativos por mês.
+          </p>
+          <p>
+            A plataforma está em fase de acesso antecipado. Os primeiros usuários terão condições especiais
+            de lançamento.
+          </p>
+          <a href="#planos" class="btn">Garantir acesso antecipado →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq-section" id="faq">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="title-lg">Perguntas frequentes</h2>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary>Preciso saber participar de licitações para usar o Licitaí?</summary>
+            <p>Não. A plataforma foi desenhada também para quem está começando. A IA explica o edital, o checklist guia o processo e o suporte está disponível para dúvidas.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>O Licitaí participa das licitações por mim?</summary>
+            <p>Não. O Licitaí é uma plataforma de inteligência: ela monitora, analisa e organiza. A participação e a proposta são sempre suas.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Posso cancelar a qualquer momento?</summary>
+            <p>Sim. Não há fidelidade. Você cancela quando quiser, sem multa.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>O plano Free tem limite de tempo?</summary>
+            <p>Não. O Free é permanente. Você só precisa fazer upgrade quando quiser mais análises, mais perguntas ou acesso ao app completo.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Como funciona a conexão com fornecedores?</summary>
+            <p>Quando você precisar formar preço, o Licitaí identifica fornecedores cadastrados no seu segmento e região e facilita o contato direto, sem intermediários.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta" id="cta-final">
+      <div class="container">
+        <h2 class="title-lg">Seu próximo contrato público começa aqui.</h2>
+        <p class="text-lead">Comece grátis hoje. Sem cartão, sem compromisso.</p>
+        <div class="final-actions">
+          <a href="#planos" class="btn">Criar minha conta grátis</a>
+          <a href="#planos" class="final-link">Ver planos →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <img class="footer-logo" src="./brand/licitai_branca.png" alt="Licitaí" />
+      <span>Licitaí · Inteligência para licitantes conectada ao PNCP</span>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
+    const menuOverlay = document.getElementById("menuOverlay");
+    const mobileLinks = document.querySelectorAll(".mobile-drawer a");
+
+    function closeMenu() {
+      document.body.classList.remove("menu-open");
+      menuToggle?.setAttribute("aria-expanded", "false");
+    }
+
+    menuToggle?.addEventListener("click", () => {
+      const isOpen = document.body.classList.toggle("menu-open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    menuOverlay?.addEventListener("click", closeMenu);
+    mobileLinks.forEach((link) => link.addEventListener("click", closeMenu));
+  </script>
+</body>
+
+</html>
