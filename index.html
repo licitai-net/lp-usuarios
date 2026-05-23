@@ -2,11 +2,22 @@
 <html lang="pt-BR">
 
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-322R030GZ6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-322R030GZ6');
+    gtag('config', 'AW-18156095563');
+  </script>
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Licitaí | Plataforma para Licitantes</title>
   <meta name="description"
-    content="O Licitaí monitora o PNCP em tempo real, analisa editais com IA e avisa você no momento certo." />
+    content="O Licitaí monitora o PNCP em tempo real, analisa editais com nossa inteligência e avisa você no momento certo." />
   <link rel="icon" type="image/png" href="./brand/licitai_icon_preto.png" />
   <link rel="apple-touch-icon" href="./brand/licitai_icon_preto.png" />
 
@@ -17,19 +28,29 @@
       --navy: #080d1d;
       --navy-2: #101a34;
       --ink: #111827;
-      --muted: #64748b;
-      --soft: #f6f8fb;
+      --muted: #6b7280;
+      --soft: #f8fafc;
       --line: #e2e8f0;
       --green: #ddfac8;
       --green-strong: #bff197;
       --green-dark: #3f7e2d;
       --gold: #e8b52c;
       --white: #ffffff;
-      --shadow: 0 18px 42px rgba(8, 13, 29, 0.07);
-      --shadow-flat: 0 1px 0 rgba(8, 13, 29, 0.04);
+
+      /* Cores do rodapé e formulário dark */
+      --navy-950: #020306;
+      --navy-900: #040814;
+      --navy-800: #071a33;
+      --navy-light: #0d2242;
+      --green-accent: #b9f48a;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --transition-fast: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+
       --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --font-mono: "IBM Plex Mono", monospace;
-      --transition: all 0.28s cubic-bezier(0.19, 1, 0.22, 1);
+      --transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
     }
 
     * {
@@ -40,175 +61,201 @@
 
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 92px;
+      scroll-padding-top: 80px;
     }
 
     body {
+      width: 100%;
       min-height: 100vh;
+      background: linear-gradient(180deg, #ffffff 0%, #f3f7fb 100%);
       color: var(--ink);
       font-family: var(--font-sans);
       line-height: 1.5;
-      background:
-        linear-gradient(180deg, #ffffff 0%, #f7fafc 52%, #ffffff 100%);
       overflow-x: hidden;
+      position: relative;
     }
 
+    /* Grade Técnica de Fundo */
     body::before {
       position: fixed;
       inset: 0;
       z-index: 0;
       content: "";
       pointer-events: none;
-      opacity: 0.58;
+      opacity: 0.65;
       background-image:
         linear-gradient(rgba(10, 18, 35, 0.045) 1px, transparent 1px),
         linear-gradient(90deg, rgba(10, 18, 35, 0.045) 1px, transparent 1px);
       background-size: 36px 36px;
     }
 
-    a {
-      color: inherit;
-    }
-
+    /* Container de Layout */
     .container {
-      position: relative;
-      z-index: 2;
       width: 100%;
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 24px;
+      position: relative;
+      z-index: 2;
     }
 
+    /* --- HEADER & NAVIGATION --- */
     .site-header {
       position: fixed;
-      inset: 0 0 auto 0;
-      z-index: 20;
-      height: 78px;
-      border-bottom: 1px solid rgba(226, 232, 240, 0.95);
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+      transition: var(--transition);
     }
 
-    .header-inner {
+    .site-header.scrolled {
+      height: 70px;
+      box-shadow: 0 10px 30px rgba(8, 13, 29, 0.04);
+      background: rgba(255, 255, 255, 0.85);
+    }
+
+    .header-container {
       display: flex;
       align-items: center;
       justify-content: space-between;
       height: 100%;
-      gap: 24px;
     }
 
     .logo-link {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       text-decoration: none;
+      transition: var(--transition);
     }
 
     .logo-img {
-      display: block;
-      width: auto;
       height: 32px;
+      width: auto;
+      display: block;
+    }
+
+    .logo-link:hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
     }
 
     .nav-menu {
       display: flex;
       align-items: center;
-      gap: 26px;
+      gap: 32px;
       list-style: none;
     }
 
     .nav-link {
-      position: relative;
       color: var(--ink);
-      font-size: 14px;
-      font-weight: 700;
       text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      transition: var(--transition);
+      position: relative;
     }
 
     .nav-link::after {
+      content: "";
       position: absolute;
+      bottom: -6px;
       left: 0;
-      bottom: -7px;
       width: 0;
       height: 2px;
-      content: "";
-      border-radius: 999px;
       background: var(--navy);
       transition: var(--transition);
+      border-radius: 2px;
+    }
+
+    .nav-link:hover {
+      color: var(--navy);
     }
 
     .nav-link:hover::after {
       width: 100%;
     }
 
-    .btn {
+    .header-cta-wrapper {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .header-cta-wrapper.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .header-cta {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 48px;
-      padding: 0 24px;
-      border: 1px solid transparent;
+      height: 44px;
+      padding: 0 20px;
       border-radius: 999px;
       background: var(--navy);
-      color: var(--white);
+      color: #white;
       font-size: 14px;
-      font-weight: 850;
+      font-weight: 700;
       text-decoration: none;
-      letter-spacing: 0.02em;
-      box-shadow: 0 12px 24px rgba(8, 13, 29, 0.16);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 10px 20px rgba(8, 13, 29, 0.15);
       transition: var(--transition);
-      white-space: nowrap;
     }
 
-    .btn:hover {
+    .header-cta:hover {
       transform: translateY(-2px);
-      background: var(--navy-2);
-      box-shadow: 0 16px 34px rgba(8, 13, 29, 0.22);
+      box-shadow: 0 12px 24px rgba(8, 13, 29, 0.22);
     }
 
-    .btn-secondary {
-      background: #ffffff;
-      color: var(--navy);
-      border-color: var(--line);
-      box-shadow: none;
-    }
-
-    .btn-secondary:hover {
-      background: #f8fafc;
-      box-shadow: 0 14px 30px rgba(8, 13, 29, 0.08);
-    }
-
+    /* Hamburguer de Menu Mobile */
     .hamburger-btn {
       display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
       width: 44px;
       height: 44px;
-      border: 0;
       border-radius: 12px;
-      background: transparent;
-      cursor: pointer;
+      position: relative;
+      z-index: 1010;
+      transition: var(--transition);
     }
 
-    .hamburger-icon,
-    .hamburger-icon::before,
-    .hamburger-icon::after {
-      display: block;
-      width: 22px;
-      height: 2px;
-      border-radius: 999px;
-      background: var(--navy);
-      transition: var(--transition);
+    .hamburger-btn:hover {
+      background: rgba(8, 13, 29, 0.05);
     }
 
     .hamburger-icon {
-      position: relative;
-      margin: 0 auto;
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--navy);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: var(--transition);
     }
 
     .hamburger-icon::before,
     .hamburger-icon::after {
-      position: absolute;
-      left: 0;
       content: "";
+      position: absolute;
+      width: 22px;
+      height: 2px;
+      background: var(--navy);
+      transition: var(--transition);
+      left: 0;
     }
 
     .hamburger-icon::before {
@@ -224,28 +271,31 @@
     }
 
     body.menu-open .hamburger-icon::before {
-      top: 0;
       transform: rotate(45deg);
+      top: 0;
     }
 
     body.menu-open .hamburger-icon::after {
-      top: 0;
       transform: rotate(-45deg);
+      top: 0;
     }
 
     .mobile-drawer {
       position: fixed;
-      top: 78px;
+      top: 0;
       right: -100%;
-      z-index: 18;
-      display: none;
       width: 100%;
-      max-width: 340px;
-      height: calc(100vh - 78px);
-      padding: 32px;
-      border-left: 1px solid var(--line);
+      max-width: 320px;
+      height: 100vh;
+      z-index: 1005;
       background: rgba(255, 255, 255, 0.98);
-      box-shadow: -20px 0 50px rgba(8, 13, 29, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: -15px 0 40px rgba(8, 13, 29, 0.08);
+      padding: 100px 32px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
       transition: var(--transition);
     }
 
@@ -254,23 +304,31 @@
     }
 
     .mobile-drawer .nav-menu {
-      align-items: flex-start;
       flex-direction: column;
-      gap: 22px;
+      align-items: flex-start;
+      gap: 24px;
     }
 
-    .mobile-drawer .btn {
+    .mobile-drawer .nav-link {
+      font-size: 18px;
       width: 100%;
-      margin-top: 28px;
+      padding: 4px 0;
+    }
+
+    .mobile-drawer .header-cta {
+      width: 100%;
+      height: 52px;
+      font-size: 15px;
+      margin-top: auto;
     }
 
     .overlay {
       position: fixed;
-      inset: 78px 0 0;
-      z-index: 17;
+      inset: 0;
+      background: rgba(8, 13, 29, 0.4);
+      z-index: 1002;
       opacity: 0;
       pointer-events: none;
-      background: rgba(8, 13, 29, 0.34);
       backdrop-filter: blur(4px);
       transition: var(--transition);
     }
@@ -280,22 +338,22 @@
       pointer-events: auto;
     }
 
+    /* --- SECTIONS COMMON STYLES --- */
     section {
       position: relative;
-      z-index: 1;
-      padding: 112px 0;
+      z-index: 2;
+      padding: 96px 0;
       overflow: hidden;
     }
 
-    .section-header {
-      max-width: 800px;
-      margin: 0 auto 58px;
+    .section-header-centered {
       text-align: center;
-    }
-
-    .section-header-left {
-      max-width: 720px;
-      margin-bottom: 48px;
+      max-width: 800px;
+      margin: 0 auto 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
     }
 
     .badge-kicker {
@@ -303,498 +361,567 @@
       align-items: center;
       gap: 10px;
       padding: 8px 16px;
-      border: 1px solid var(--line);
       border-radius: 999px;
-      background: #ffffff;
-      color: var(--muted);
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 4px 12px rgba(8, 13, 29, 0.03);
+      color: #64748b;
       font-family: var(--font-mono);
       font-size: 12px;
       font-weight: 700;
-      letter-spacing: 1.8px;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      box-shadow: var(--shadow-flat);
     }
 
     .badge-kicker::before {
       width: 8px;
       height: 8px;
       content: "";
-      border-radius: 999px;
+      border-radius: 50%;
       background: var(--green-strong);
       box-shadow: 0 0 0 5px rgba(221, 250, 200, 0.8);
+      animation: liveDot 2200ms ease-in-out infinite;
     }
 
-    .eyebrow-gap {
-      margin-bottom: 18px;
-    }
-
-    .title-xl,
     .title-lg {
       color: var(--navy);
-      font-weight: 900;
-      letter-spacing: -0.035em;
-    }
-
-    .title-xl {
-      max-width: 780px;
-      margin: 0 0 24px;
-      font-size: clamp(42px, 5.6vw, 72px);
-      line-height: 1.03;
-    }
-
-    .title-lg {
-      margin-bottom: 16px;
-      font-size: clamp(32px, 3.8vw, 46px);
-      line-height: 1.12;
+      font-size: clamp(32px, 4vw, 44px);
+      font-weight: 850;
+      line-height: 1.15;
+      letter-spacing: -1.5px;
     }
 
     .text-lead {
       color: #4b5563;
-      font-size: clamp(16px, 1.45vw, 20px);
-      font-weight: 550;
-      line-height: 1.55;
+      font-size: clamp(16px, 1.25vw, 19px);
+      font-weight: 500;
+      line-height: 1.5;
+      max-width: 680px;
     }
 
+    .desktop-only {
+      display: none;
+    }
+
+    .mobile-only {
+      display: inline;
+    }
+
+    @media (min-width: 768px) {
+      .desktop-only {
+        display: inline;
+      }
+
+      .mobile-only {
+        display: none !important;
+      }
+    }
+
+    /* --- SEÇÃO 1: HERO --- */
     .hero-section {
+      padding-top: 160px;
+      padding-bottom: 100px;
+      min-height: 100vh;
       display: flex;
       align-items: center;
-      min-height: 92vh;
-      padding-top: 146px;
-      padding-bottom: 98px;
+      justify-content: center;
+      position: relative;
     }
 
     .hero-content {
-      display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 58px;
-      max-width: 1180px;
+      text-align: center;
+      max-width: 1040px;
       margin: 0 auto;
+      position: relative;
+      z-index: 2;
     }
 
-    .hero-copy {
-      text-align: left;
+    .hero-badge {
+      margin-bottom: 24px;
+      animation: enterUp 600ms cubic-bezier(0.19, 1, 0.22, 1) both;
+    }
+
+    .hero-title {
+      font-size: clamp(36px, 5.2vw, 68px);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -2.5px;
+      color: var(--navy);
+      margin-bottom: 28px;
+      animation: enterUp 700ms 100ms cubic-bezier(0.19, 1, 0.22, 1) both;
+    }
+
+    .hero-title .highlight {
+      display: inline-block;
+      padding: 0 14px 2px;
+      border-radius: 16px;
+      background: var(--green);
+      color: var(--navy);
+      font-weight: 900;
     }
 
     .hero-sub {
-      max-width: 720px;
-      margin: 0 0 34px;
+      font-size: clamp(17px, 1.6vw, 22px);
       color: #4b5563;
-      font-size: clamp(17px, 1.55vw, 22px);
-      font-weight: 550;
-      line-height: 1.5;
+      font-weight: 500;
+      line-height: 1.45;
+      letter-spacing: -0.3px;
+      max-width: 920px;
+      margin-bottom: 48px;
+      animation: enterUp 700ms 200ms cubic-bezier(0.19, 1, 0.22, 1) both;
     }
 
-    .hero-actions {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 14px;
-    }
-
-    .hero-panel {
-      position: relative;
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: #ffffff;
-      box-shadow: var(--shadow);
-    }
-
-    .hero-panel::before {
-      position: absolute;
-      inset: 18px auto auto -18px;
-      width: 42px;
-      height: 220px;
-      content: "";
-      border-radius: 999px;
-      background: var(--green-strong);
-      opacity: 0.65;
-    }
-
-    .dashboard-card {
-      position: relative;
-      z-index: 1;
-      overflow: hidden;
-      border: 1px solid #dbe3ec;
-      border-radius: 18px;
-      background: #f8fafc;
-    }
-
-    .dashboard-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px;
-      border-bottom: 1px solid #dbe3ec;
-      background: #ffffff;
-    }
-
-    .dashboard-title {
-      color: var(--navy);
-      font-size: 14px;
-      font-weight: 900;
-      letter-spacing: -0.01em;
-    }
-
-    .dashboard-status {
-      padding: 5px 9px;
-      border-radius: 999px;
-      background: var(--green);
-      color: var(--green-dark);
-      font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .opportunity-list {
-      display: grid;
-      gap: 10px;
-      padding: 14px;
-    }
-
-    .opportunity-row {
-      display: grid;
-      grid-template-columns: 42px 1fr auto;
-      align-items: center;
-      gap: 12px;
-      padding: 14px;
-      border: 1px solid #e2e8f0;
-      border-radius: 14px;
-      background: #ffffff;
-    }
-
-    .opportunity-icon {
+    .hero-cta-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      background: var(--green);
-      color: var(--green-dark);
-    }
-
-    .opportunity-icon svg {
-      width: 22px;
-      height: 22px;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-width: 2.1;
-    }
-
-    .opportunity-name {
-      display: block;
-      color: var(--navy);
-      font-size: 14px;
+      height: 60px;
+      padding: 0 36px;
+      border-radius: 999px;
+      background: var(--navy);
+      color: #fff;
+      font-size: 16px;
       font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 20px 40px rgba(8, 13, 29, 0.24);
+      transition: var(--transition);
+      animation: enterUp 700ms 300ms cubic-bezier(0.19, 1, 0.22, 1) both;
     }
 
-    .opportunity-meta {
-      display: block;
-      margin-top: 3px;
-      color: #64748b;
-      font-size: 12px;
-      font-weight: 700;
+    .hero-cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 24px 48px rgba(8, 13, 29, 0.32);
+      background: #111b36;
     }
 
-    .opportunity-score {
-      color: var(--navy);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .dashboard-summary {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      border-top: 1px solid #dbe3ec;
-      background: #dbe3ec;
-    }
-
-    .summary-item {
-      padding: 16px;
-      background: #ffffff;
-    }
-
-    .summary-value {
-      display: block;
-      color: var(--navy);
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: -0.04em;
-    }
-
-    .summary-label {
-      display: block;
-      margin-top: 2px;
-      color: #64748b;
-      font-size: 11px;
-      font-weight: 750;
-    }
-
-    .microcopy {
-      color: #6b7280;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .numbers-section,
-    .audience-section,
-    .features-section,
-    .faq-section {
-      background: #ffffff;
-      border-top: 1px solid rgba(226, 232, 240, 0.9);
-      border-bottom: 1px solid rgba(226, 232, 240, 0.9);
-    }
-
-    .metrics-grid {
+    /* Cartões de Métricas no Hero */
+    .hero-metrics {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 20px;
-    }
-
-    .metric-card,
-    .audience-card,
-    .feature-card,
-    .plan-card,
-    .social-card,
-    .faq-item,
-    .flow-card {
-      border: 1px solid #e2e8f0;
-      background: #ffffff;
-      box-shadow: var(--shadow-flat);
+      width: 100%;
+      max-width: 1040px;
+      margin-top: 64px;
+      animation: enterUp 800ms 400ms cubic-bezier(0.19, 1, 0.22, 1) both;
     }
 
     .metric-card {
-      position: relative;
-      min-height: 178px;
-      padding: 26px;
-      border-radius: 18px;
-      overflow: hidden;
+      padding: 20px 24px;
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      border-radius: 24px;
+      box-shadow: 0 12px 32px rgba(8, 13, 29, 0.03), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      text-align: left;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
-    .metric-card::before {
-      position: absolute;
-      inset: 0 0 auto;
-      height: 4px;
-      content: "";
-      background: var(--green-strong);
+    .metric-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.55);
+      box-shadow: 0 16px 40px rgba(8, 13, 29, 0.08);
     }
 
-    .metric-label {
-      display: inline-flex;
-      margin-bottom: 18px;
-      padding: 5px 9px;
-      border-radius: 8px;
-      background: #effbe7;
-      color: var(--green-dark);
+    .metric-period {
+      display: inline-block;
       font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
       text-transform: uppercase;
+      color: var(--green-dark);
+      background: rgba(191, 241, 151, 0.25);
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      align-self: flex-start;
+      line-height: 1;
     }
 
     .metric-value {
-      margin-bottom: 10px;
-      color: var(--navy);
-      font-size: clamp(30px, 3.3vw, 42px);
+      font-size: clamp(24px, 2.8vw, 32px);
       font-weight: 900;
-      line-height: 1.04;
-      letter-spacing: -0.04em;
+      letter-spacing: -1px;
+      color: var(--navy);
+      line-height: 1.1;
+      margin-bottom: 6px;
     }
 
-    .metric-context {
+    .metric-label {
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.3;
       color: #64748b;
+    }
+
+    /* --- SEÇÃO 2: POR QUE O LICITAÍ (RADAR & SLIDER) --- */
+    #porque-licitai {
+      background: #ffffff;
+      border-top: 1px solid rgba(226, 232, 240, 0.8);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+      position: relative;
+      z-index: 2;
+    }
+
+    .radar-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 auto;
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .radar-graphic {
+      position: relative;
+      width: 260px;
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, rgba(191, 241, 151, 0.15) 0%, transparent 75%);
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .radar-grid-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      filter: drop-shadow(0px 1px 1.5px rgba(63, 126, 45, 0.18));
+    }
+
+    .radar-sweep {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg,
+          transparent 0deg,
+          transparent 270deg,
+          rgba(191, 241, 151, 0.05) 270deg,
+          rgba(191, 241, 151, 0.55) 360deg);
+      pointer-events: none;
+      z-index: 2;
+      transform: rotate(0deg);
+      transform-origin: center center;
+    }
+
+    .radar-pulse {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1px solid rgba(191, 241, 151, 0.5);
+      background: transparent;
+      animation: radarRipple 4s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .radar-center {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      background: transparent;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+    }
+
+    .radar-dots-container {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .radar-dot {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: var(--green-strong);
+      border: 1.5px solid var(--green-dark);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      box-shadow: 0 0 10px rgba(191, 241, 151, 0.6), 0 0 4px rgba(63, 126, 45, 0.3);
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    @keyframes radarRipple {
+      0% {
+        width: 20px;
+        height: 20px;
+        opacity: 0.85;
+        border-color: rgba(191, 241, 151, 0.6);
+      }
+
+      100% {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        border-color: rgba(191, 241, 151, 0);
+      }
+    }
+
+    .radar-badge {
+      margin-top: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 32px;
+      padding: 0 16px;
+      background: #000000;
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      border-radius: 999px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      text-transform: uppercase;
+      z-index: 10;
+    }
+
+    /* --- STEPPER TIMELINE (Seção 2 Fundida) --- */
+    .stepper-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      flex: 1;
+    }
+
+    .stepper-timeline::before {
+      content: "";
+      position: absolute;
+      left: 20px;
+      top: 24px;
+      bottom: 24px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--green-strong) 0%, rgba(188, 241, 151, 0.15) 100%);
+      border-radius: 2px;
+    }
+
+    .stepper-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 24px 0;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .stepper-item+.stepper-item {
+      border-top: 1px solid rgba(226, 232, 240, 0.5);
+    }
+
+    .stepper-item:hover .stepper-icon-wrapper {
+      background: var(--green-strong);
+      color: var(--navy);
+      transform: scale(1.08);
+      box-shadow: 0 0 18px rgba(188, 241, 151, 0.45);
+    }
+
+    .stepper-item:hover .stepper-title {
+      color: var(--green-dark);
+    }
+
+    .stepper-icon-wrapper {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      border: 2px solid rgba(226, 232, 240, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--green-dark);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      z-index: 2;
+    }
+
+    .stepper-content {
+      flex: 1;
+      padding-top: 8px;
+    }
+
+    .stepper-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.3px;
+      margin-bottom: 6px;
+      transition: color 0.2s ease;
+    }
+
+    .stepper-desc {
       font-size: 14px;
-      font-weight: 650;
-      line-height: 1.4;
+      color: #52525b;
+      line-height: 1.55;
+      font-weight: 500;
+      margin: 0;
+    }
+
+    /* --- PLANOS: MOBILE TABS SELECTOR --- */
+    .plans-mobile-tabs {
+      display: none;
+      /* Oculto no desktop */
+    }
+
+    @keyframes planFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Fire icon animation */
+    @keyframes fireFlicker {
+      0% {
+        transform: scaleY(1) scaleX(1) rotate(-2deg);
+        opacity: 1;
+      }
+
+      25% {
+        transform: scaleY(1.08) scaleX(0.95) rotate(2deg);
+        opacity: 0.9;
+      }
+
+      50% {
+        transform: scaleY(0.95) scaleX(1.05) rotate(-1deg);
+        opacity: 1;
+      }
+
+      75% {
+        transform: scaleY(1.06) scaleX(0.97) rotate(2deg);
+        opacity: 0.92;
+      }
+
+      100% {
+        transform: scaleY(1) scaleX(1) rotate(-2deg);
+        opacity: 1;
+      }
+    }
+
+    .fire-icon {
+      display: inline-flex;
+      align-items: center;
+      margin-left: 4px;
+      vertical-align: middle;
+      transform-origin: bottom center;
+      animation: fireFlicker 1.4s ease-in-out infinite;
+      will-change: transform;
+      opacity: 0.55;
+      transition: opacity 0.2s ease;
+    }
+
+    .plan-tab-btn.active .fire-icon {
+      opacity: 1;
+    }
+
+    /* --- SEÇÃO 4: PARA QUEM É (AUDIENCE) --- */
+    .para-quem-section {
+      background: #ffffff;
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
     }
 
     .audience-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 28px;
+      margin-top: 16px;
     }
 
     .audience-card {
       display: flex;
       flex-direction: column;
       gap: 24px;
-      min-height: 410px;
       padding: 36px;
-      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      border-radius: 24px;
+      box-shadow: 0 12px 32px rgba(8, 13, 29, 0.02);
+      transition: var(--transition);
     }
 
-    .audience-card h3,
-    .feature-card h3,
-    .plan-card h3,
-    .flow-card h3 {
+    .audience-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(15, 23, 42, 0.12);
+      box-shadow: 0 16px 40px rgba(8, 13, 29, 0.06);
+    }
+
+    .audience-card h3 {
       color: var(--navy);
       font-size: 22px;
       font-weight: 900;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.5px;
     }
 
     .audience-quote {
       color: #4b5563;
-      font-size: 17px;
-      font-weight: 650;
+      font-size: 16px;
+      font-weight: 600;
       line-height: 1.55;
     }
 
-    .check-list,
-    .plan-list {
+    .check-list {
       display: grid;
       gap: 12px;
       list-style: none;
     }
 
-    .check-list li,
-    .plan-list li {
+    .check-list li {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       align-items: flex-start;
       color: #334155;
       font-size: 15px;
-      font-weight: 650;
+      font-weight: 500;
     }
 
-    .check-list li::before,
-    .plan-list li::before {
+    .check-list li::before {
       flex: 0 0 auto;
       content: "✓";
-      color: var(--navy);
-      font-weight: 900;
-      width: 20px;
-      height: 20px;
-      border-radius: 6px;
-      background: var(--green);
-      text-align: center;
-      line-height: 20px;
-      font-size: 12px;
-    }
-
-    .how-section {
-      background:
-        linear-gradient(135deg, #080d1d 0%, #101a34 64%, #18314a 100%);
-      color: #ffffff;
-    }
-
-    .how-section .title-lg,
-    .how-section .text-lead {
-      color: #ffffff;
-    }
-
-    .how-section .text-lead {
-      color: #cbd5e1;
-    }
-
-    .flow-grid {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .flow-card {
-      min-height: 334px;
-      padding: 24px 22px;
-      border-color: rgba(255, 255, 255, 0.12);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.07);
-      box-shadow: none;
-    }
-
-    .flow-number {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 42px;
-      height: 42px;
-      margin-bottom: 28px;
-      border: 1px solid rgba(191, 241, 151, 0.38);
-      border-radius: 12px;
       color: var(--green-strong);
-      font-family: var(--font-mono);
-      font-size: 13px;
-      font-weight: 800;
+      font-weight: 900;
+      font-size: 15px;
+      margin-top: 1px;
+      line-height: 1;
     }
 
-    .flow-card h3 {
-      margin-bottom: 14px;
-      color: #ffffff;
-      font-size: 18px;
-    }
-
-    .flow-card p {
-      color: #cbd5e1;
-      font-size: 14px;
-      font-weight: 550;
-      line-height: 1.55;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-    }
-
-    .feature-card {
-      min-height: 250px;
-      padding: 28px;
-      border-radius: 18px;
-      transition: var(--transition);
-    }
-
-    .feature-card:hover,
-    .plan-card:hover,
-    .audience-card:hover,
-    .metric-card:hover {
-      transform: translateY(-2px);
-      border-color: #cbd5e1;
-      box-shadow: var(--shadow);
-    }
-
-    .feature-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 48px;
-      height: 48px;
-      margin-bottom: 22px;
-      border-radius: 14px;
-      background: #effbe7;
-      color: var(--green-dark);
-    }
-
-    .feature-icon svg {
-      width: 24px;
-      height: 24px;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-width: 2.2;
-    }
-
+    /* --- SEÇÃO 5: PLANOS --- */
     .plans-section {
       background: #f8fafc;
-      border-top: 1px solid rgba(226, 232, 240, 0.9);
-      border-bottom: 1px solid rgba(226, 232, 240, 0.9);
-    }
-
-    .feature-card h3 {
-      margin-bottom: 10px;
-      font-size: 19px;
-    }
-
-    .feature-card p {
-      color: #526072;
-      font-size: 15px;
-      font-weight: 600;
-      line-height: 1.52;
+      border-top: 1px solid rgba(226, 232, 240, 0.8);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
     }
 
     .plans-grid {
@@ -802,15 +929,17 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 20px;
       align-items: stretch;
+      margin-top: 16px;
     }
 
     .plan-card {
       position: relative;
       display: flex;
       flex-direction: column;
-      min-height: 628px;
-      padding: 30px;
-      border-radius: 18px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 24px;
+      padding: 32px 28px;
       transition: var(--transition);
       overflow: hidden;
     }
@@ -823,10 +952,16 @@
       background: #dbe3ec;
     }
 
+    .plan-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(8, 13, 29, 0.06);
+      border-color: rgba(15, 23, 42, 0.12);
+    }
+
     .plan-card.popular {
       border-color: #a7e879;
       background: #fbfff7;
-      box-shadow: 0 18px 42px rgba(63, 126, 45, 0.12);
+      box-shadow: 0 18px 42px rgba(63, 126, 45, 0.08);
     }
 
     .plan-card.popular::before {
@@ -837,109 +972,558 @@
       position: absolute;
       top: 22px;
       right: 22px;
-      padding: 7px 10px;
+      padding: 5px 10px;
       border-radius: 999px;
       background: var(--navy);
       color: #ffffff;
       font-family: var(--font-mono);
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 800;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.8px;
       text-transform: uppercase;
+      line-height: 1;
     }
 
     .plan-name {
       margin-bottom: 12px;
-      color: var(--green-dark);
-      font-size: 13px;
+      color: var(--green-strong);
+      filter: brightness(0.75);
+      font-size: 12px;
       font-family: var(--font-mono);
       font-weight: 800;
-      letter-spacing: 0.12em;
+      letter-spacing: 1px;
       text-transform: uppercase;
     }
 
     .plan-price {
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       color: var(--navy);
-      font-size: clamp(32px, 3.1vw, 44px);
+      font-size: clamp(26px, 2.5vw, 36px);
       font-weight: 900;
-      letter-spacing: -0.04em;
+      letter-spacing: -1.2px;
       line-height: 1;
     }
 
-    .plan-card:first-child .plan-price {
-      color: var(--green-dark);
-    }
-
     .plan-promise {
-      min-height: 78px;
+      min-height: 72px;
       margin-bottom: 24px;
-      padding-bottom: 22px;
+      padding-bottom: 18px;
       border-bottom: 1px solid #e2e8f0;
       color: #526072;
-      font-size: 14.5px;
+      font-size: 14px;
       font-weight: 700;
       line-height: 1.45;
     }
 
     .plan-list {
-      margin-bottom: 28px;
+      display: grid;
+      gap: 12px;
+      list-style: none;
+      margin-bottom: 32px;
     }
 
     .plan-list li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      color: #475569;
       font-size: 13.5px;
-      line-height: 1.42;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .plan-list li::before {
+      content: "✓";
+      color: var(--green-strong);
+      filter: brightness(0.7);
+      font-weight: 900;
+      font-size: 12px;
+    }
+
+    /* 30 dias grátis tag no Pro */
+    .plan-trial-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(191, 241, 151, 0.12);
+      border: 1px solid rgba(191, 241, 151, 0.35);
+      color: #4a9e36;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+
+    .plan-card.popular .plan-trial-tag {
+      background: rgba(191, 241, 151, 0.18);
+      border-color: rgba(191, 241, 151, 0.5);
+      color: #3a8a2a;
     }
 
     .plan-card .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 48px;
       width: 100%;
+      border: 1px solid var(--navy);
+      border-radius: 999px;
+      background: var(--navy);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
       margin-top: auto;
+      transition: var(--transition);
+      cursor: pointer;
     }
 
-    .social-section {
-      padding: 112px 0;
-      background: #f6faf2;
+    .plan-card .btn:hover {
+      transform: translateY(-2px);
+      background: #111b36;
+      box-shadow: 0 10px 20px rgba(8, 13, 29, 0.1);
     }
 
-    .social-card {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 46px;
-      border-radius: 18px;
-      text-align: center;
-    }
-
-    .social-card strong {
+    .plan-card .btn-secondary {
+      background: #ffffff;
       color: var(--navy);
+      border-color: var(--line);
     }
 
-    .social-card p {
-      margin-bottom: 28px;
-      color: #334155;
-      font-size: clamp(18px, 2vw, 24px);
-      font-weight: 750;
-      line-height: 1.45;
+    .plan-card .btn-secondary:hover {
+      background: #f8fafc;
+      border-color: var(--navy);
+    }
+
+    /* --- SEÇÃO 6: PROVA SOCIAL --- */
+    .prova-social-section {
+      background: linear-gradient(135deg, var(--navy-950) 0%, var(--navy-900) 58%, var(--navy-800) 100%);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 80px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .prova-social-section::before {
+      content: "";
+      position: absolute;
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 400px;
+      background: rgba(197, 242, 157, 0.03);
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+    }
+
+    .prova-social-container {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      padding: 0 20px;
+    }
+
+    .prova-social-number {
+      font-family: var(--font-sans);
+      font-size: clamp(72px, 10vw, 110px);
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -3px;
+      background: linear-gradient(135deg, #ffffff 40%, var(--green-strong) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+      filter: drop-shadow(0 4px 12px rgba(197, 242, 157, 0.15));
+    }
+
+    .prova-social-title {
+      color: #ffffff;
+      font-size: clamp(28px, 4vw, 38px);
+      font-weight: 850;
+      letter-spacing: -1px;
+      line-height: 1.15;
+    }
+
+    .prova-social-desc {
+      color: #94a3b8;
+      font-size: clamp(15px, 2vw, 17px);
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    .cta-scroll-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 56px;
+      padding: 0 32px;
+      border-radius: 999px;
+      background: #c5f29d;
+      color: #0f172a;
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(197, 242, 157, 0.18);
+      transition: var(--transition);
+    }
+
+    .cta-scroll-link:hover {
+      background: #b2e884;
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(197, 242, 157, 0.28);
+    }
+
+    /* --- SEÇÃO 7: BENEFÍCIOS & CADASTRO --- */
+    #beneficios {
+      background: #ffffff;
+    }
+
+    .solution-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+      margin-top: 16px;
+    }
+
+    .benefits-slider-container {
+      min-width: 0;
+    }
+
+    .benefits-list {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .benefit-item {
+      display: flex;
+      gap: 20px;
+    }
+
+    .benefit-icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      background: transparent;
+      color: var(--green-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .benefit-title {
+      color: var(--navy);
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      letter-spacing: -0.2px;
+    }
+
+    .benefit-desc {
+      color: #52525b;
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .benefits-dots {
+      display: none;
+    }
+
+    .benefit-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .benefit-dot.active {
+      background: var(--navy);
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    /* Estilos do Formulário Escuro */
+    .form-container-card {
+      background: linear-gradient(135deg, var(--navy-950) 0%, var(--navy-900) 58%, var(--navy-800) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 32px;
+      padding: 40px;
+      box-shadow: 0 24px 60px rgba(8, 13, 29, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      position: relative;
+      transition: var(--transition);
+      overflow: hidden;
+    }
+
+    .form-container-card::before {
+      content: "";
+      position: absolute;
+      bottom: -100px;
+      right: -100px;
+      width: 250px;
+      height: 250px;
+      background: rgba(185, 244, 138, 0.04);
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .form-container-card:hover {
+      border-color: rgba(255, 255, 255, 0.14);
+      background: linear-gradient(135deg, var(--navy-950) 0%, var(--navy-900) 50%, var(--navy-light) 100%);
+      box-shadow: 0 32px 70px rgba(8, 13, 29, 0.45);
+    }
+
+    .form-card-title,
+    .form-card-subtitle,
+    #supplierLeadForm {
+      position: relative;
+      z-index: 2;
+    }
+
+    .form-card-title {
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 850;
+      letter-spacing: -0.6px;
+      margin-bottom: 8px;
+    }
+
+    .form-card-subtitle {
+      color: #94a3b8;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 32px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .form-step {
+      display: none;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      width: 100%;
+    }
+
+    .form-step.active {
+      display: grid;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-field label {
+      color: #94a3b8;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      height: 52px;
+      padding: 0 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 500;
+      transition: var(--transition);
+      width: 100%;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-field input::placeholder,
+    .form-field select::placeholder,
+    .form-field textarea::placeholder {
+      color: #71717a;
+    }
+
+    .form-field textarea {
+      height: 110px;
+      padding: 14px 18px;
+      resize: vertical;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: var(--green-strong);
+      background: rgba(255, 255, 255, 0.09);
+      box-shadow: 0 0 0 3px rgba(191, 241, 151, 0.25);
+    }
+
+    .form-field:focus-within label {
+      color: var(--green-strong);
+      transition: color 0.25s ease;
+    }
+
+    .form-field select {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      background-size: 18px;
+      padding-right: 40px;
+      cursor: pointer;
+      color: rgba(244, 244, 245, 0.45);
+    }
+
+    .form-field select option {
+      background: #18181b;
+      color: #f4f4f5;
+    }
+
+    .form-submit {
+      height: 56px;
+      border-radius: 999px;
+      background: #c5f29d;
+      color: #0f172a;
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(197, 242, 157, 0.15);
+      transition: var(--transition);
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .form-submit:hover {
+      background: #b2e884;
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px rgba(197, 242, 157, 0.25);
+    }
+
+    .form-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .form-status {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 10px;
+      padding: 10px;
+      display: none;
+      margin-top: 12px;
+    }
+
+    .form-status.is-success {
+      display: block;
+      background: #e2fbe5;
+      color: #1e5c26;
+      border: 1px solid #c2f3c7;
+    }
+
+    .form-status.is-error {
+      display: block;
+      background: #ffe8e5;
+      color: #b24a41;
+      border: 1px solid #ffc9c2;
+    }
+
+    #formStep1,
+    #formStep2,
+    .form-step,
+    .form-step.active {
+      grid-template-columns: 1fr !important;
+      width: 100% !important;
+    }
+
+    #formStep1>div,
+    #formStep2>div,
+    #formStep1 .form-field,
+    #formStep2 .form-field,
+    #formStep1 .form-submit,
+    #formStep2 .form-submit {
+      grid-column: span 1 !important;
+      width: 100% !important;
+    }
+
+    /* --- SEÇÃO 8: FAQ --- */
+    .faq-section {
+      background: #ffffff;
+      border-top: 1px solid rgba(226, 232, 240, 0.8);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
     }
 
     .faq-list {
       display: grid;
-      max-width: 920px;
+      max-width: 860px;
       margin: 0 auto;
-      gap: 14px;
+      gap: 16px;
     }
 
     .faq-item {
-      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 1px 0 rgba(8, 13, 29, 0.02);
       overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .faq-item:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 10px 24px rgba(8, 13, 29, 0.04);
     }
 
     .faq-item summary {
-      padding: 22px 24px;
+      padding: 24px 28px;
       color: var(--navy);
       font-size: 17px;
       font-weight: 850;
       cursor: pointer;
       list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .faq-item summary::-webkit-details-marker {
@@ -947,234 +1531,1310 @@
     }
 
     .faq-item summary::after {
-      float: right;
       content: "+";
       color: var(--green-dark);
-      font-size: 22px;
+      font-size: 24px;
+      font-weight: 500;
       line-height: 1;
+      transition: var(--transition);
     }
 
     .faq-item[open] summary::after {
       content: "-";
+      transform: rotate(180deg);
     }
 
     .faq-item p {
-      padding: 0 24px 24px;
+      padding: 0 28px 24px;
       color: #526072;
       font-size: 15.5px;
       font-weight: 600;
-      line-height: 1.55;
+      line-height: 1.6;
     }
 
-    .final-cta {
-      padding: 120px 0;
-      text-align: center;
-      background:
-        linear-gradient(135deg, #080d1d 0%, #101a34 100%);
-      color: #ffffff;
-    }
-
-    .final-cta .title-lg,
-    .final-cta .text-lead {
-      color: #ffffff;
-    }
-
-    .final-actions {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 16px;
-      margin-top: 30px;
-      flex-wrap: wrap;
-    }
-
-    .final-cta .btn {
-      background: var(--green-strong);
-      color: var(--navy);
-      box-shadow: 0 18px 38px rgba(191, 241, 151, 0.16);
-    }
-
-    .final-link {
-      color: #cbd5e1;
-      font-weight: 800;
-      text-decoration: none;
-    }
-
+    /* --- RODAPÉ (FOOTER) --- */
     .site-footer {
+      background: linear-gradient(135deg, var(--navy-950) 0%, var(--navy-900) 58%, var(--navy-800) 100%);
+      color: #ffffff;
+      padding: 80px 24px 40px;
+      position: relative;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      width: 100%;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .site-footer::before {
+      content: "";
+      position: absolute;
+      bottom: -150px;
+      right: -150px;
+      width: 350px;
+      height: 350px;
+      background: rgba(185, 244, 138, 0.06);
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
       position: relative;
       z-index: 2;
-      padding: 34px 0;
-      background: #030712;
-      color: #94a3b8;
     }
 
-    .footer-inner {
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 64px;
+    }
+
+    .footer-brand {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      font-size: 13px;
-      font-weight: 650;
+      flex-direction: column;
+      gap: 24px;
     }
 
     .footer-logo {
+      height: 36px;
       width: auto;
-      height: 28px;
+      align-self: flex-start;
+      display: block;
     }
 
+    .footer-brand p {
+      color: var(--slate-400);
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 340px;
+      font-weight: 500;
+    }
+
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .footer-col h4 {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--slate-500);
+      text-transform: uppercase;
+    }
+
+    .footer-links-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      list-style: none;
+    }
+
+    .footer-link {
+      color: var(--slate-300);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: var(--transition-fast);
+      align-self: flex-start;
+      position: relative;
+    }
+
+    .footer-link::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--green-accent);
+      transition: var(--transition-fast);
+    }
+
+    .footer-link:hover {
+      color: #ffffff;
+    }
+
+    .footer-link:hover::after {
+      width: 100%;
+    }
+
+    .social-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      transition: var(--transition-fast);
+      text-decoration: none;
+    }
+
+    .social-link svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    .social-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(185, 244, 138, 0.4);
+      color: var(--green-accent);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-bottom span {
+      color: var(--slate-500);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .footer-bottom span.highlight {
+      color: var(--slate-400);
+      font-family: "IBM Plex Mono", monospace;
+    }
+
+    /* --- RESPONSIVIDADE ADICIONAL --- */
     @media (max-width: 1080px) {
-      .hero-content {
-        grid-template-columns: 1fr;
-        gap: 42px;
-      }
-
-      .hero-copy {
-        text-align: center;
-      }
-
-      .title-xl,
-      .hero-sub {
-        margin-right: auto;
-        margin-left: auto;
-      }
-
-      .hero-actions {
-        align-items: center;
-      }
-
-      .hero-panel {
-        max-width: 640px;
-        margin: 0 auto;
-      }
-
-      .metrics-grid,
       .plans-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+    }
 
-      .flow-grid,
-      .features-grid {
-        grid-template-columns: repeat(2, 1fr);
+    @media (max-width: 992px) {
+      .porque-licitai-content {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
       }
 
-      .plan-card {
-        min-height: auto;
+      .radar-wrapper {
+        max-width: 220px;
+        margin: 0 auto;
+      }
+
+      .radar-graphic {
+        width: 220px;
+        height: 220px;
+      }
+
+      .slider-container {
+        width: calc(100% + 40px);
+        margin-left: -20px;
+        margin-right: -20px;
+        margin-top: 0;
+        overflow: hidden;
+      }
+
+      .cards-slider {
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory !important;
+        scroll-behavior: smooth !important;
+        gap: 16px !important;
+        padding: 8px 20px 20px !important;
+        scrollbar-width: none !important;
+      }
+
+      .slider-card {
+        flex: 0 0 82% !important;
+        scroll-snap-align: start !important;
+      }
+
+      .slider-dots {
+        display: flex !important;
+      }
+
+      .solution-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .hero-metrics {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 680px;
+      }
+
+      .fluxo-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+      }
+
+      .footer-brand {
+        grid-column: span 2;
+      }
+    }
+
+    @media (min-width: 993px) {
+      .porque-licitai-content {
+        display: grid;
+        grid-template-columns: 340px 1fr;
+        gap: 60px;
+        align-items: center;
+        margin-top: 48px;
+      }
+
+      .radar-wrapper {
+        max-width: 340px;
+        margin: 0;
+      }
+
+      .radar-graphic {
+        width: 340px;
+        height: 340px;
+      }
+
+      .slider-container {
+        margin-top: 0;
+      }
+
+      .cards-slider {
+        flex-direction: column;
+        overflow: visible;
+        gap: 16px;
+        padding: 0;
+      }
+
+      .slider-card {
+        flex: none;
+        width: 100%;
+      }
+
+      .slider-dots {
+        display: none;
       }
     }
 
     @media (max-width: 860px) {
-      .site-header .nav-menu,
-      .site-header .header-cta {
+
+      .nav-menu,
+      .header-cta-wrapper {
         display: none;
       }
 
-      .hamburger-btn,
-      .mobile-drawer {
+      .hamburger-btn {
         display: block;
       }
 
-      section {
-        padding: 76px 0;
-      }
-
       .hero-section {
-        min-height: auto;
-        padding-top: 132px;
+        padding-top: 120px;
       }
 
-      .hero-panel::before {
-        display: none;
-      }
-
-      .audience-grid,
-      .features-grid,
-      .flow-grid {
+      .audience-grid {
         grid-template-columns: 1fr;
+        gap: 24px;
       }
 
-      .audience-card {
-        min-height: auto;
-        padding: 28px;
+      .benefits-slider-container {
+        min-width: 0;
+        width: 100%;
       }
 
-      .flow-card {
-        min-height: auto;
+      .benefits-list {
+        flex-direction: row;
+        gap: 20px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        padding: 10px 24px 20px;
+        margin-left: -24px;
+        margin-right: -24px;
+      }
+
+      .benefits-list::after {
+        content: "";
+        flex: 0 0 24px;
+      }
+
+      .benefit-item {
+        flex: 0 0 85%;
+        scroll-snap-align: start;
+        background: rgba(255, 255, 255, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: 20px;
+        padding: 24px;
+        box-shadow: 0 12px 32px rgba(8, 13, 29, 0.03), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+
+      .benefits-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 16px;
+        margin-bottom: 24px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .hero-metrics {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 16px !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory !important;
+        scroll-behavior: smooth !important;
+        width: calc(100% + 40px) !important;
+        margin-left: -20px !important;
+        margin-right: -20px !important;
+        padding: 10px 20px 24px 20px !important;
+        scrollbar-width: none !important;
+        margin-top: 40px !important;
+      }
+
+      .hero-metrics .metric-card {
+        flex: 0 0 78% !important;
+        scroll-snap-align: center !important;
+        min-height: 120px !important;
+        padding: 20px 18px !important;
       }
     }
 
     @media (max-width: 640px) {
-      .container {
-        padding: 0 18px;
+      section {
+        padding: 56px 0;
       }
 
-      .title-xl {
-        font-size: clamp(38px, 13vw, 52px);
-        letter-spacing: -0.04em;
+      .hero-section {
+        padding-top: 100px;
+        padding-bottom: 60px;
       }
 
-      .title-lg {
-        font-size: clamp(29px, 10vw, 38px);
+      .hero-title {
+        font-size: clamp(28px, 9vw, 38px);
+        line-height: 1.15;
+        letter-spacing: -0.8px;
+        margin-bottom: 18px;
       }
 
-      .metrics-grid,
+      .hero-sub {
+        font-size: 15px;
+        margin-bottom: 28px;
+      }
+
+      .hero-cta-btn {
+        width: 100%;
+        height: 54px;
+        font-size: 16px;
+      }
+
+      /* PLANS MOBILE TABS */
+      .plans-mobile-tabs {
+        display: flex;
+        gap: 4px;
+        padding: 5px;
+        background: #f1f5f9;
+        border: 1px solid rgba(226, 232, 240, 0.9);
+        border-radius: 999px;
+        margin: 20px 0;
+        overflow-x: auto;
+        scrollbar-width: none;
+        flex-wrap: nowrap;
+        box-shadow: inset 0 1px 3px rgba(8, 13, 29, 0.06);
+      }
+
+      .plans-mobile-tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .plan-tab-btn {
+        flex: 1;
+        min-width: 64px;
+        padding: 9px 18px;
+        border-radius: 999px;
+        border: none;
+        background: transparent;
+        font-size: 14px;
+        font-weight: 700;
+        color: #64748b;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+        font-family: inherit;
+        user-select: none;
+      }
+
+      .plan-tab-btn.active {
+        background: var(--navy);
+        color: #ffffff;
+        box-shadow: 0 2px 10px rgba(8, 13, 29, 0.22);
+      }
+
+      .plan-card--hidden {
+        display: none !important;
+      }
+
       .plans-grid {
         grid-template-columns: 1fr;
       }
 
-      .metric-card {
-        min-height: auto;
+      .form-container-card {
+        padding: 28px 20px;
+        border-radius: 24px;
+        margin-left: -4px;
+        margin-right: -4px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
       }
 
-      .social-card {
-        padding: 30px 22px;
+      .form-field input,
+      .form-field select,
+      .form-field textarea {
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        background: rgba(255, 255, 255, 0.1);
       }
 
-      .final-actions,
-      .hero-actions {
-        align-items: stretch;
-      }
-
-      .hero-actions .btn,
-      .final-actions .btn {
-        width: 100%;
-      }
-
-      .opportunity-row {
-        grid-template-columns: 38px 1fr;
-      }
-
-      .opportunity-score {
-        grid-column: 2;
-      }
-
-      .dashboard-summary {
+      .footer-grid {
         grid-template-columns: 1fr;
+        gap: 32px;
       }
 
-      .footer-inner {
-        align-items: flex-start;
+      .footer-brand {
+        grid-column: span 1;
+      }
+
+      .footer-bottom {
         flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    /* --- SEÇÃO: WEB + APP --- */
+    .app-section {
+      background: #ffffff;
+      border-top: 1px solid rgba(226, 232, 240, 0.8);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+      position: relative;
+    }
+
+    .app-showcase {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 56px;
+      align-items: center;
+      margin-bottom: 48px;
+    }
+
+    .app-copy-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .store-badges {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .store-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      height: 44px;
+      padding: 0 16px;
+      background: #f1f5f9;
+      /* Slate grey light */
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      /* Rounded square corners */
+      color: var(--navy);
+      text-decoration: none;
+      transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 6px rgba(8, 13, 29, 0.03);
+    }
+
+    .store-badge:hover {
+      transform: translateY(-1.5px);
+      background: #e2e8f0;
+      /* Darker slate grey on hover */
+      border-color: #94a3b8;
+      box-shadow: 0 6px 14px rgba(8, 13, 29, 0.08);
+    }
+
+    .store-badge svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      transition: transform 0.22s ease;
+    }
+
+    .store-badge:hover svg {
+      transform: scale(1.05);
+    }
+
+    .store-badge-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 1.15;
+      text-align: left;
+    }
+
+    .store-badge-text small {
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #64748b;
+      font-weight: 700;
+    }
+
+    .store-badge-text strong {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* CSS Phone Frame Ultra Realista */
+    .mockup-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      width: 100%;
+    }
+
+    .phone-mockup {
+      width: 260px;
+      height: 510px;
+      background: #000000;
+      border-radius: 44px;
+      position: relative;
+      box-shadow:
+        0 25px 50px -12px rgba(8, 13, 29, 0.35),
+        0 0 0 4px #1e293b,
+        /* Titanium ring */
+        0 0 0 6px #334155,
+        /* Outer bezel shadow */
+        inset 0 0 15px rgba(255, 255, 255, 0.15);
+      display: flex;
+      flex-direction: column;
+      border: 8px solid #090d16;
+      /* Screen black bezel */
+    }
+
+    /* Dynamic Island */
+    .phone-mockup::before {
+      content: "";
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 22px;
+      background: #000000;
+      border-radius: 12px;
+      z-index: 10;
+      box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.1);
+    }
+
+    /* Screen glare reflection sheen */
+    .phone-glare {
+      position: absolute;
+      top: -100%;
+      left: -100%;
+      width: 300%;
+      height: 300%;
+      background: linear-gradient(135deg,
+          rgba(255, 255, 255, 0) 45%,
+          rgba(255, 255, 255, 0.04) 48%,
+          rgba(255, 255, 255, 0.08) 50%,
+          rgba(255, 255, 255, 0.04) 52%,
+          rgba(255, 255, 255, 0) 55%);
+      transform: rotate(0deg);
+      pointer-events: none;
+      z-index: 9;
+      opacity: 0.85;
+    }
+
+    /* Side Buttons (Simulated Physical Buttons) - Placed inside phone-mockup and peeking out */
+    .phone-btn {
+      position: absolute;
+      width: 4px;
+      background: #475569;
+      border-radius: 3px 0 0 3px;
+      left: -12px;
+      z-index: -1;
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .phone-btn.volume-up {
+      height: 38px;
+      top: 100px;
+    }
+
+    .phone-btn.volume-down {
+      height: 38px;
+      top: 148px;
+    }
+
+    .phone-btn.action-btn {
+      height: 20px;
+      top: 65px;
+    }
+
+    .phone-btn.power-btn {
+      height: 55px;
+      right: -12px;
+      left: auto;
+      border-radius: 0 3px 3px 0;
+      top: 120px;
+      border-left: none;
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .phone-screen {
+      flex: 1;
+      padding: 16px 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: #f9faf6;
+      /* Fundo idêntico ao do print para mesclagem perfeita */
+      position: relative;
+      text-align: left;
+      overflow: hidden;
+      /* Clips the screens contents inside the inner border */
+      border-radius: 36px;
+      /* Matched to the frames inner curve */
+      justify-content: space-between;
+    }
+
+    .phone-screen::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 20%, rgba(185, 244, 138, 0.05), transparent 50%);
+      /* Glow sutil */
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .phone-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #64748b;
+      font-size: 9px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      padding: 0 4px;
+      z-index: 2;
+      margin-top: 2px;
+    }
+
+    .phone-header-right {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .phone-logo {
+      height: 11px;
+      width: auto;
+      display: block;
+      opacity: 0.9;
+    }
+
+    /* Phone Screen Image Background (Ajustado pela Altura com Fundo Branco) */
+    .phone-screen-img {
+      position: absolute;
+      top: 160px;
+      /* Deslocado ainda mais para baixo para centralização e desviar do topo */
+      left: 0;
+      width: 100%;
+      height: calc(100% - 170px);
+      object-fit: contain;
+      /* Ajusta a imagem inteira pela altura */
+      object-position: top center;
+      /* Mantém o topo da imagem alinhado */
+      background: #f9faf6;
+      /* Fundo idêntico ao do print para mesclagem perfeita */
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Notification Push UI */
+    .phone-push {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 14px;
+      padding: 10px 12px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      z-index: 2;
+      box-shadow:
+        0 10px 25px -5px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      margin-bottom: 6px;
+      animation: phonePushFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes phonePushFloat {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-4px);
+      }
+    }
+
+    /* Floating Notifications Outside Phone */
+    .floating-push {
+      position: absolute;
+      width: 210px;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 16px;
+      padding: 12px;
+      box-shadow:
+        0 20px 40px -10px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      z-index: 10;
+      pointer-events: none;
+      display: none;
+      /* Hidden on mobile */
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    /* Floating Animations */
+    .floating-push.left-float {
+      left: calc(50% - 245px);
+      /* Overlaps phone left side by 95px */
+      top: 15%;
+      display: flex;
+      animation: floatCardLeft 7s ease-in-out infinite;
+    }
+
+    .floating-push.right-float {
+      right: calc(50% - 245px);
+      /* Overlaps phone right side by 95px */
+      top: 38%;
+      display: flex;
+      animation: floatCardRight 8s ease-in-out infinite;
+    }
+
+    .floating-push.third-float {
+      left: calc(50% - 250px);
+      /* Overlaps phone left side slightly more */
+      bottom: 12%;
+      display: flex;
+      animation: floatCardLeft 9s ease-in-out infinite;
+      animation-delay: 1.5s;
+    }
+
+    /* Oculta os selos duplicados do mobile na versão desktop */
+    .mobile-only-badges {
+      display: none !important;
+    }
+
+    @keyframes floatCardLeft {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-1.5deg);
+      }
+
+      50% {
+        transform: translateY(-12px) rotate(1deg);
+      }
+    }
+
+    @keyframes floatCardRight {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(1.5deg);
+      }
+
+      50% {
+        transform: translateY(-14px) rotate(-1deg);
+      }
+    }
+
+
+
+    @media (max-width: 900px) {
+      .mockup-wrapper {
+        flex-direction: column !important;
+        gap: 0 !important;
+        /* Remove gap so we can control precise overlaps via margins */
+      }
+
+      /* Arrumar notificações no mobile: empilha sob o celular com sobreposição premium */
+      .floating-push {
+        display: flex !important;
+        /* Torna visível no mobile */
+        position: relative !important;
+        /* Muda de absoluta para relativa */
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        bottom: auto !important;
+        width: 100% !important;
+        max-width: 260px;
+        /* Alinhado com a largura do celular */
+        margin: 0 auto !important;
+        /* Centralizado sem espaçamento padrão */
+        box-shadow: 0 15px 35px rgba(8, 13, 29, 0.2) !important;
+        /* Sombra mais destacada pelo overlap */
+        animation: phonePushFloat 6s ease-in-out infinite !important;
+        z-index: 10 !important;
+      }
+
+      .floating-push.left-float {
+        margin-top: -65px !important;
+        /* Puxa para cima sobrepondo o bottom do iPhone mockup */
+        z-index: 11 !important;
+        animation-delay: 0s !important;
+      }
+
+      .floating-push.right-float {
+        margin-top: -22px !important;
+        /* Puxa para cima sobrepondo levemente a notificação anterior */
+        z-index: 12 !important;
+        /* Fica acima da primeira notificação */
+        animation-delay: 2s !important;
+        /* Oscilação alternada */
+      }
+
+      .floating-push.third-float {
+        margin-top: -22px !important;
+        /* Puxa para cima sobrepondo levemente a notificação anterior */
+        z-index: 13 !important;
+        /* Fica acima da segunda notificação */
+        animation-delay: 4s !important;
+        /* Oscilação alternada */
+      }
+
+      /* Move os selos de download para baixo do iPhone no mobile */
+      .app-copy-block .store-badges {
+        display: none !important;
+        /* Oculta os selos originais no topo */
+      }
+
+      .mockup-wrapper .store-badges.mobile-only-badges {
+        display: flex !important;
+        /* Mostra os selos duplicados abaixo da pilha */
+        margin: 32px auto 0 !important;
+        /* Espaçamento limpo abaixo da pilha de notificações */
+        justify-content: center !important;
+        width: 100% !important;
+        max-width: 360px !important;
+        /* Aumentado para caber lado a lado */
+        gap: 8px !important;
+        flex-wrap: nowrap !important;
+        /* Força os selos lado a lado no mobile */
+      }
+
+      .mockup-wrapper .store-badges.mobile-only-badges .store-badge {
+        padding: 8px 12px !important;
+        /* Ajusta o padding para caber lado a lado no celular */
+        gap: 6px !important;
+        border-radius: 10px !important;
+      }
+
+      .mockup-wrapper .store-badges.mobile-only-badges .store-badge svg {
+        width: 16px !important;
+        /* Ícones ligeiramente mais compactos */
+        height: 16px !important;
+      }
+
+      .mockup-wrapper .store-badges.mobile-only-badges .store-badge-text strong {
+        font-size: 11px !important;
+        /* Textos ligeiramente mais compactos */
+      }
+
+      .mockup-wrapper .store-badges.mobile-only-badges .store-badge-text small {
+        font-size: 8px !important;
+      }
+    }
+
+    .phone-push-icon-wrapper {
+      width: 22px;
+      height: 22px;
+      background: var(--navy);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .phone-push-icon-wrapper svg {
+      width: 12px;
+      height: 12px;
+      color: var(--green-accent);
+    }
+
+    .phone-push-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      text-align: left;
+    }
+
+    .phone-push-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .phone-push-app {
+      color: #94a3b8;
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .phone-push-time {
+      color: #64748b;
+      font-size: 8px;
+      font-weight: 500;
+    }
+
+    .phone-push-title {
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 750;
+      margin-top: 1px;
+    }
+
+    .phone-push-desc {
+      color: #cbd5e1;
+      font-size: 9.5px;
+      line-height: 1.3;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    /* Carrossel de Tópicos (Slide no Mobile, Grid Lado a Lado no Desktop) */
+    .app-carousel-container {
+      position: relative;
+      width: 100%;
+      max-width: 1024px;
+      /* Desktop width back to full width for side-by-side grid */
+      margin: 0 auto;
+      padding: 0;
+      box-sizing: border-box;
+      border-top: 1px solid rgba(226, 232, 240, 0.7);
+      padding-top: 48px;
+    }
+
+    .app-carousel-track-wrapper {
+      width: 100%;
+      position: relative;
+    }
+
+    .app-carousel-track {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      transform: none;
+      /* JavaScript clears inline styles on desktop */
+    }
+
+    .app-carousel-card {
+      width: 100%;
+      background: #f8fafc;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      border-radius: 20px;
+      padding: 32px 26px;
+      box-shadow: 0 4px 12px rgba(8, 13, 29, 0.02);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+      text-align: left;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-sizing: border-box;
+    }
+
+    .app-carousel-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(15, 23, 42, 0.15);
+      background: #f1f5f9;
+      box-shadow: 0 8px 20px rgba(8, 13, 29, 0.04);
+    }
+
+    .app-carousel-card-icon {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--green-dark);
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .app-carousel-card:hover .app-carousel-card-icon {
+      color: var(--navy);
+      transform: scale(1.1);
+    }
+
+    .app-carousel-card-title {
+      color: var(--navy);
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      line-height: 1.3;
+    }
+
+    .app-carousel-card-desc {
+      color: #52525b;
+      font-size: 13.5px;
+      line-height: 1.45;
+      font-weight: 500;
+    }
+
+    /* Setas e Dots ocultados no Desktop por padrão */
+    .carousel-arrow {
+      position: absolute;
+      top: calc(50% + 24px);
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 50%;
+      color: var(--navy);
+      display: none !important;
+      /* Always hidden on desktop since grid doesn't scroll */
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 12px rgba(8, 13, 29, 0.04);
+    }
+
+    .carousel-arrow:hover {
+      background: var(--navy);
+      color: #ffffff;
+      border-color: var(--navy);
+      box-shadow: 0 6px 16px rgba(8, 13, 29, 0.15);
+    }
+
+    .carousel-arrow.prev {
+      left: 0;
+    }
+
+    .carousel-arrow.next {
+      right: 0;
+    }
+
+    .carousel-arrow.disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .carousel-arrow svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.2;
+    }
+
+    /* Dots indicadores */
+    .carousel-dots {
+      display: none !important;
+      /* Hidden on desktop */
+      justify-content: center;
+      gap: 8px;
+      margin-top: 28px;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #cbd5e1;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .carousel-dot:hover {
+      background: #94a3b8;
+    }
+
+    .carousel-dot.active {
+      background: var(--navy);
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    .app-closing-line {
+      text-align: center;
+      margin-top: 40px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      width: 100%;
+    }
+
+    /* Estilos exclusivos para Mobile (Slide de 1 item) */
+    @media (max-width: 900px) {
+      .app-showcase {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+      }
+
+      .app-copy-block {
+        align-items: center !important;
+        text-align: center !important;
+      }
+
+      .store-badges {
+        justify-content: center !important;
+      }
+
+      .app-carousel-container {
+        max-width: 640px !important;
+        padding: 0 48px !important;
+        /* Space for absolute navigation arrows */
+      }
+
+      .app-carousel-track-wrapper {
+        overflow: hidden !important;
+        cursor: grab;
+        touch-action: pan-y;
+        /* Prevents browser horizontal swipe-to-navigate / swipe bouncing, allowing smooth touch sliding! */
+      }
+
+      .app-carousel-track-wrapper:active {
+        cursor: grabbing;
+      }
+
+      .app-carousel-track {
+        display: flex !important;
+        /* Switch grid to flex slide track */
+        gap: 24px !important;
+        /* Allow transform to be overridden by inline Javascript styles */
+        transform: none;
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .app-carousel-card {
+        flex: 0 0 100% !important;
+        width: 100% !important;
+      }
+
+      .carousel-arrow {
+        display: flex !important;
+        /* Visible on mobile */
+      }
+
+      .carousel-dots {
+        display: flex !important;
+        /* Visible on mobile */
+      }
+    }
+
+    /* --- ANIMATION KEYFRAMES --- */
+    @keyframes enterUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes liveDot {
+
+      0%,
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 4px rgba(221, 250, 200, 0.6);
+      }
+
+      50% {
+        transform: scale(1.15);
+        box-shadow: 0 0 0 8px rgba(221, 250, 200, 0.95);
       }
     }
   </style>
 </head>
 
 <body>
+  <!-- HEADER & NAVIGATION -->
   <header class="site-header" id="siteHeader">
-    <div class="container header-inner">
+    <div class="container header-container">
       <a href="#hero" class="logo-link" aria-label="Licitaí">
         <img class="logo-img" src="./brand/licitai_preta.png" alt="Licitaí" />
       </a>
 
       <ul class="nav-menu">
-        <li><a href="#para-quem" class="nav-link">Para quem é</a></li>
+        <li><a href="#porque-licitai" class="nav-link">O Licitaí</a></li>
         <li><a href="#como-funciona" class="nav-link">Como funciona</a></li>
-        <li><a href="#recursos" class="nav-link">Recursos</a></li>
+        <li><a href="#para-quem" class="nav-link">Para quem é</a></li>
         <li><a href="#planos" class="nav-link">Planos</a></li>
         <li><a href="#faq" class="nav-link">FAQ</a></li>
       </ul>
 
-      <a href="#planos" class="btn header-cta">Começar grátis</a>
+      <div class="header-cta-wrapper">
+        <a href="#cadastro" class="header-cta">Começar grátis</a>
+      </div>
 
       <button class="hamburger-btn" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">
         <span class="hamburger-icon"></span>
@@ -1183,147 +2843,204 @@
   </header>
 
   <div class="overlay" id="menuOverlay"></div>
+
   <nav class="mobile-drawer" id="mobileDrawer" aria-label="Menu mobile">
     <ul class="nav-menu">
-      <li><a href="#para-quem" class="nav-link">Para quem é</a></li>
+      <li><a href="#porque-licitai" class="nav-link">O Licitaí</a></li>
       <li><a href="#como-funciona" class="nav-link">Como funciona</a></li>
-      <li><a href="#recursos" class="nav-link">Recursos</a></li>
+      <li><a href="#para-quem" class="nav-link">Para quem é</a></li>
       <li><a href="#planos" class="nav-link">Planos</a></li>
       <li><a href="#faq" class="nav-link">FAQ</a></li>
     </ul>
-    <a href="#planos" class="btn">Começar grátis</a>
+    <a href="#cadastro" class="header-cta">Começar grátis</a>
   </nav>
 
-  <main>
-    <section class="hero-section" id="hero">
+  <main id="hero">
+    <!-- SEÇÃO 1: HERO -->
+    <section class="hero-section">
       <div class="container hero-content">
-        <div class="hero-copy">
-          <div class="badge-kicker eyebrow-gap">Plataforma para licitantes</div>
-          <h1 class="title-xl">O edital certo. A análise pronta. O prazo nunca perdido.</h1>
-          <p class="hero-sub">
-            O Licitaí monitora o PNCP em tempo real, analisa editais com IA e avisa você no momento certo
-            para que você gaste energia só em contratos que valem a pena.
-          </p>
-          <div class="hero-actions">
-            <a href="#planos" class="btn">Começar grátis</a>
-            <p class="microcopy">Sem cartão de crédito · Cancele quando quiser</p>
-          </div>
-        </div>
+        <div class="hero-badge badge-kicker">Plataforma para licitantes</div>
+        <h1 class="hero-title">O edital certo. A análise pronta. <br class="desktop-only" /><span class="highlight">O
+            prazo</span> nunca perdido.</h1>
+        <p class="hero-sub">
+          O Licitaí monitora o PNCP em tempo real, analisa editais com nossa inteligência e avisa você no momento certo
+          para que você gaste energia só em contratos que valem a pena.
+        </p>
+        <a href="#cadastro" class="hero-cta-btn">Garantir acesso antecipado</a>
 
-        <div class="hero-panel" aria-label="Prévia do painel Licitaí">
-          <div class="dashboard-card">
-            <div class="dashboard-top">
-              <span class="dashboard-title">Radar de oportunidades</span>
-              <span class="dashboard-status">Ao vivo</span>
-            </div>
-            <div class="opportunity-list">
-              <div class="opportunity-row">
-                <span class="opportunity-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path d="M4 7h16" />
-                    <path d="M7 7v13" />
-                    <path d="M17 7v13" />
-                    <path d="M9 4h6l2 3H7l2-3Z" />
-                  </svg>
-                </span>
-                <span>
-                  <span class="opportunity-name">Pregão eletrônico identificado</span>
-                  <span class="opportunity-meta">Objeto aderente · prazo em 6 dias</span>
-                </span>
-                <span class="opportunity-score">92%</span>
-              </div>
-
-              <div class="opportunity-row">
-                <span class="opportunity-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path d="M6 4h12v16H6z" />
-                    <path d="M9 8h6" />
-                    <path d="M9 12h6" />
-                    <path d="M9 16h3" />
-                  </svg>
-                </span>
-                <span>
-                  <span class="opportunity-name">Edital analisado pela IA</span>
-                  <span class="opportunity-meta">3 riscos · 4 exigências críticas</span>
-                </span>
-                <span class="opportunity-score">4 min</span>
-              </div>
-
-              <div class="opportunity-row">
-                <span class="opportunity-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
-                    <path d="M10 21h4" />
-                  </svg>
-                </span>
-                <span>
-                  <span class="opportunity-name">Alerta de prazo enviado</span>
-                  <span class="opportunity-meta">Push · e-mail · WhatsApp</span>
-                </span>
-                <span class="opportunity-score">Agora</span>
-              </div>
-            </div>
-            <div class="dashboard-summary">
-              <span class="summary-item">
-                <span class="summary-value">18</span>
-                <span class="summary-label">matches úteis</span>
-              </span>
-              <span class="summary-item">
-                <span class="summary-value">7</span>
-                <span class="summary-label">em preparação</span>
-              </span>
-              <span class="summary-item">
-                <span class="summary-value">R$ 2,4 mi</span>
-                <span class="summary-label">mapeados</span>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="numbers-section" id="numeros">
-      <div class="container">
-        <div class="metrics-grid">
-          <article class="metric-card">
-            <span class="metric-label">Total anual 2025</span>
+        <!-- Cartões de Métricas -->
+        <div class="hero-metrics">
+          <div class="metric-card">
+            <span class="metric-period">Total Anual 2025</span>
             <div class="metric-value">R$ 1,3 tri</div>
-            <p class="metric-context">Em compras públicas federais</p>
-          </article>
-
-          <article class="metric-card">
-            <span class="metric-label">Até maio/2026</span>
+            <div class="metric-label">Em compras públicas federais</div>
+          </div>
+          <div class="metric-card">
+            <span class="metric-period">Até Maio/2026</span>
             <div class="metric-value">481,7 mil</div>
-            <p class="metric-context">Processos para ME/EPP</p>
-          </article>
-
-          <article class="metric-card">
-            <span class="metric-label">Editais/dia</span>
+            <div class="metric-label">Processos para ME/EPP</div>
+          </div>
+          <div class="metric-card">
+            <span class="metric-period">Editais / Dia</span>
             <div class="metric-value">+3.200</div>
-            <p class="metric-context">Publicados no PNCP</p>
-          </article>
-
-          <article class="metric-card">
-            <span class="metric-label">Economia média</span>
+            <div class="metric-label">Publicados no PNCP</div>
+          </div>
+          <div class="metric-card">
+            <span class="metric-period">Economia Média</span>
             <div class="metric-value">23%</div>
-            <p class="metric-context">Em propostas com análise prévia</p>
-          </article>
+            <div class="metric-label">Em propostas com análise prévia</div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="audience-section" id="para-quem">
+    <!-- SEÇÃO 2: COMO FUNCIONA (TECNOLOGIA & RECURSOS INTEGRADOS) -->
+    <section id="como-funciona">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header-centered" style="margin-bottom: 56px;">
+          <div class="badge-kicker">Tecnologia &amp; Recursos</div>
+          <h2 class="title-lg">Como o Licitaí opera por você</h2>
+          <p class="text-lead">Da triagem automática no PNCP à inteligência artificial que destrincha editais e envia
+            alertas push direto no seu app.</p>
+        </div>
+
+        <div class="porque-licitai-content">
+          <!-- O Radar Dinâmico Sonar -->
+          <div class="radar-wrapper" aria-hidden="true">
+            <div class="radar-graphic">
+              <!-- Círculos e Eixos do Radar -->
+              <svg class="radar-grid-svg" viewBox="0 0 200 200" fill="none" stroke="rgba(191, 241, 151, 0.28)"
+                stroke-width="1">
+                <circle cx="100" cy="100" r="90" stroke-dasharray="1 3" />
+                <circle cx="100" cy="100" r="70" />
+                <circle cx="100" cy="100" r="50" stroke-dasharray="2 2" />
+                <circle cx="100" cy="100" r="30" />
+                <circle cx="100" cy="100" r="10" stroke-dasharray="1 1" />
+                <line x1="100" y1="10" x2="100" y2="190" stroke-dasharray="3 3" />
+                <line x1="10" y1="100" x2="190" y2="100" stroke-dasharray="3 3" />
+              </svg>
+              <!-- Sonar Varredor -->
+              <div class="radar-sweep" id="radarSweepElement"></div>
+              <!-- Ondas Pulsantes -->
+              <div class="radar-pulse"></div>
+              <!-- Recipiente das Bolinhas Sonar -->
+              <div class="radar-dots-container" id="radarDotsContainer"></div>
+              <!-- Centro do radar com ponto verde -->
+              <div class="radar-center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--green-strong)">
+                  <circle cx="12" cy="12" r="6" stroke="var(--green-dark)" stroke-width="2" />
+                </svg>
+              </div>
+            </div>
+            <div class="radar-badge">Radar ativo</div>
+          </div>
+
+          <!-- Timeline Stepper com 4 Passos Fundidos -->
+          <div class="stepper-timeline">
+            <!-- Passo 1 -->
+            <article class="stepper-item">
+              <div class="stepper-icon-wrapper">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </div>
+              <div class="stepper-content">
+                <h3 class="stepper-title">01. Monitoramento &amp; Busca Avançada</h3>
+                <p class="stepper-desc">Nossa IA varre o PNCP, Diários Oficiais e portais 24h por dia. Busque e filtre
+                  oportunidades por objeto, modalidade, órgão, UF e valor estimado em segundos.</p>
+              </div>
+            </article>
+
+            <!-- Passo 2 -->
+            <article class="stepper-item">
+              <div class="stepper-icon-wrapper">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                  <polyline points="2 17 12 22 22 17"></polyline>
+                  <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+              </div>
+              <div class="stepper-content">
+                <h3 class="stepper-title">02. Filtro de Alta Aderência</h3>
+                <p class="stepper-desc">Filtramos os processos cruzando o objeto com seu histórico e nicho. Você recebe
+                  no seu painel exclusivamente as oportunidades que têm real viabilidade de ganho.</p>
+              </div>
+            </article>
+
+            <!-- Passo 3 -->
+            <article class="stepper-item">
+              <div class="stepper-icon-wrapper">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+              </div>
+              <div class="stepper-content">
+                <h3 class="stepper-title">03. Análise de Edital &amp; Chat Inteligente</h3>
+                <p class="stepper-desc">O robô extrai um resumo executivo do edital, mapeia riscos e exigências
+                  restritivas. Tire dúvidas em linguagem natural com a nossa IA sobre as regras do edital.</p>
+              </div>
+            </article>
+
+            <!-- Passo 4 -->
+            <article class="stepper-item">
+              <div class="stepper-icon-wrapper">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+              </div>
+              <div class="stepper-content">
+                <h3 class="stepper-title">04. Conexão Direta com Fornecedores</h3>
+                <p class="stepper-desc">Quando precisar formar preço, conectamos você instantaneamente a fornecedores
+                  parceiros cadastrados no seu segmento e região, sem intermediadores.</p>
+              </div>
+            </article>
+
+            <!-- Passo 5 -->
+            <article class="stepper-item">
+              <div class="stepper-icon-wrapper">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" />
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                </svg>
+              </div>
+              <div class="stepper-content">
+                <h3 class="stepper-title">05. Alertas Push em Tempo Real</h3>
+                <p class="stepper-desc">Receba notificações push automáticas de novos editais compatíveis e prazos
+                  críticos direto no app, mesmo com a tela bloqueada.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 4: PARA QUEM É -->
+    <section class="para-quem-section" id="para-quem">
+      <div class="container">
+        <div class="section-header-centered">
           <h2 class="title-lg">O Licitaí foi feito para você?</h2>
         </div>
 
         <div class="audience-grid">
+          <!-- Quem já licita -->
           <article class="audience-card">
-            <h3>Quem já lícita</h3>
+            <h3>Quem já licita</h3>
             <p class="audience-quote">
-              "Você já participa de licitações mas perde tempo lendo editais irrelevantes, esquece prazos
-              e não tem visão clara de quais oportunidades realmente valem."
+              "Você já participa de licitações mas perde tempo lendo editais irrelevantes, esquece prazos e não tem
+              visão clara de quais oportunidades realmente valem."
             </p>
             <ul class="check-list">
               <li>Organiza suas oportunidades em um lugar só</li>
@@ -1333,6 +3050,7 @@
             </ul>
           </article>
 
+          <!-- Quem quer começar -->
           <article class="audience-card">
             <h3>Quem quer começar</h3>
             <p class="audience-quote">
@@ -1341,7 +3059,7 @@
             </p>
             <ul class="check-list">
               <li>Busca simples e rápida no PNCP</li>
-              <li>IA explica o edital em linguagem acessível</li>
+              <li>Nossa inteligência explica o edital em linguagem acessível</li>
               <li>Checklist guiado para não errar o processo</li>
               <li>Suporte para dar o primeiro passo com segurança</li>
             </ul>
@@ -1350,304 +3068,1139 @@
       </div>
     </section>
 
-    <section class="how-section" id="como-funciona">
+    <!-- SEÇÃO: WEB + APP -->
+    <section class="app-section" id="web-app">
       <div class="container">
-        <div class="section-header">
-          <div class="badge-kicker eyebrow-gap">Tecnologia</div>
-          <h2 class="title-lg">Veja o Licitaí trabalhando por você</h2>
-          <p class="text-lead">
-            Da publicação do edital até a cotação com o fornecedor, tudo em um fluxo inteligente.
-          </p>
+
+        <div class="app-showcase">
+          <!-- Bloco de Texto & Selos -->
+          <div class="app-copy-block">
+            <div class="badge-kicker" style="margin-bottom: 24px;">WEB + APP</div>
+            <h2 class="title-lg" style="margin-bottom: 20px;">Na sua mesa ou na palma da mão. O Licitaí está sempre
+              com você.</h2>
+            <p class="text-lead" style="margin-bottom: 0;">Web e app sincronizados em tempo real. O que você monitora no
+              computador aparece no celular, e o alerta chega antes do prazo fechar.</p>
+
+            <!-- Selos iOS e Android (Clean & Flat - Cinza com cantos arredondados) -->
+            <div class="store-badges">
+              <!-- iOS App Store -->
+              <a href="#cadastro" class="store-badge" aria-label="Baixar na App Store">
+                <!-- Official Apple Black Icon -->
+                <svg viewBox="0 0 24 24" style="fill: #000000;">
+                  <path
+                    d="M18.71 19.5c-.83 1.24-1.71 2.45-3.1 2.48-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.23-1.93 1.09-3.14-1.03.04-2.3.68-3.03 1.54-.67.76-1.25 1.89-1.09 3.05 1.15.09 2.29-.63 3.03-1.45z" />
+                </svg>
+                <div class="store-badge-text">
+                  <small>Disponível na</small>
+                  <strong>App Store</strong>
+                </div>
+              </a>
+
+              <!-- Google Play -->
+              <a href="#cadastro" class="store-badge" aria-label="Baixar no Google Play">
+                <!-- Official Google Play Multicolor Icon -->
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M3.25 2.3c-.22.24-.35.61-.35 1.07v17.26c0 .46.13.83.35 1.07l.08.07L13.1 12.03v-.07v-.07L3.33 2.23l-.08.07z"
+                    fill="#00b0ff" />
+                  <path
+                    d="M16.37 15.3l-3.27-3.27v-.07v-.07l3.27-3.27.08.05 3.88 2.21c1.1.63 1.1 1.66 0 2.28l-3.88 2.21-.08-.14z"
+                    fill="#ffc400" />
+                  <path d="M16.45 15.16l-3.35-3.35L3.25 21.65c.36.38.96.43 1.65.04l11.55-6.53z" fill="#ff3d00" />
+                  <path d="M16.45 8.9L4.9 2.37c-.69-.39-1.29-.34-1.65.04l9.85 9.85 3.35-3.36z" fill="#4caf50" />
+                </svg>
+                <div class="store-badge-text">
+                  <small>Disponível no</small>
+                  <strong>Google Play</strong>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Mockup de Celular Realista -->
+          <div class="mockup-wrapper" aria-hidden="true">
+            <div class="phone-mockup">
+              <!-- Simulated Physical Side Buttons -->
+              <div class="phone-btn volume-up"></div>
+              <div class="phone-btn volume-down"></div>
+              <div class="phone-btn action-btn"></div>
+              <div class="phone-btn power-btn"></div>
+
+              <!-- Glass sheen reflections overlay -->
+              <div class="phone-glare"></div>
+
+              <div class="phone-screen">
+                <!-- Phone Mockup Active Screen Image (tela 4.png) -->
+                <img class="phone-screen-img" id="phoneScreenImg" src="./telas/tela 4.png" alt="Tela Licitaí" />
+              </div>
+            </div>
+
+            <!-- Floating Notification Left (Outside Phone) -->
+            <div class="floating-push left-float">
+              <div class="phone-push-icon-wrapper" style="background: #ffffff; border-color: rgba(0, 0, 0, 0.08);">
+                <img src="./brand/licitai_icon_preto.png" alt="Licitaí"
+                  style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;" />
+              </div>
+              <div class="phone-push-content">
+                <div class="phone-push-meta">
+                  <span class="phone-push-app">Radar Licitaí</span>
+                  <span class="phone-push-time">agora</span>
+                </div>
+                <span class="phone-push-title">Oportunidade Quente 🔥</span>
+                <span class="phone-push-desc">Pregão Eletrônico SP. 96% de aderência.</span>
+              </div>
+            </div>
+
+            <!-- Floating Notification Right (Outside Phone) -->
+            <div class="floating-push right-float">
+              <div class="phone-push-icon-wrapper" style="background: #ffffff; border-color: rgba(0, 0, 0, 0.08);">
+                <img src="./brand/licitai_icon_preto.png" alt="Licitaí"
+                  style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;" />
+              </div>
+              <div class="phone-push-content">
+                <div class="phone-push-meta">
+                  <span class="phone-push-app">nossa inteligência</span>
+                  <span class="phone-push-time">2m atrás</span>
+                </div>
+                <span class="phone-push-title">Análise Pronta 🤖</span>
+                <span class="phone-push-desc">Edital resumido com sucesso.</span>
+              </div>
+            </div>
+
+            <!-- Floating Notification Third (Outside Phone) -->
+            <div class="floating-push third-float">
+              <div class="phone-push-icon-wrapper" style="background: #ffffff; border-color: rgba(0, 0, 0, 0.08);">
+                <img src="./brand/licitai_icon_preto.png" alt="Licitaí"
+                  style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;" />
+              </div>
+              <div class="phone-push-content">
+                <div class="phone-push-meta">
+                  <span class="phone-push-app">Licitaí Alertas</span>
+                  <span class="phone-push-time">5m atrás</span>
+                </div>
+                <span class="phone-push-title">Prazo de Envio ⏰</span>
+                <span class="phone-push-desc">Sua proposta para o Pregão PR vence em 2h.</span>
+              </div>
+            </div>
+
+            <!-- Mobile Only Store Badges (Moved Below Phone and Notifications) -->
+            <div class="store-badges mobile-only-badges">
+              <!-- iOS App Store -->
+              <a href="#cadastro" class="store-badge" aria-label="Baixar na App Store">
+                <svg viewBox="0 0 24 24" style="fill: #000000;">
+                  <path
+                    d="M18.71 19.5c-.83 1.24-1.71 2.45-3.1 2.48-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.23-1.93 1.09-3.14-1.03.04-2.3.68-3.03 1.54-.67.76-1.25 1.89-1.09 3.05 1.15.09 2.29-.63 3.03-1.45z" />
+                </svg>
+                <div class="store-badge-text">
+                  <small>Disponível na</small>
+                  <strong>App Store</strong>
+                </div>
+              </a>
+
+              <!-- Google Play -->
+              <a href="#cadastro" class="store-badge" aria-label="Baixar no Google Play">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M3.25 2.3c-.22.24-.35.61-.35 1.07v17.26c0 .46.13.83.35 1.07l.08.07L13.1 12.03v-.07v-.07L3.33 2.23l-.08.07z"
+                    fill="#00b0ff" />
+                  <path
+                    d="M16.37 15.3l-3.27-3.27v-.07v-.07l3.27-3.27.08.05 3.88 2.21c1.1.63 1.1 1.66 0 2.28l-3.88 2.21-.08-.14z"
+                    fill="#ffc400" />
+                  <path d="M16.45 15.16l-3.35-3.35L3.25 21.65c.36.38.96.43 1.65.04l11.55-6.53z" fill="#ff3d00" />
+                  <path d="M16.45 8.9L4.9 2.37c-.69-.39-1.29-.34-1.65.04l9.85 9.85 3.35-3.36z" fill="#4caf50" />
+                </svg>
+                <div class="store-badge-text">
+                  <small>Disponível no</small>
+                  <strong>Google Play</strong>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Colunas com Ícones Flat no Carrossel deslizante -->
+      <div class="app-carousel-container">
+        <div class="app-carousel-track-wrapper" id="appCarouselWrapper">
+          <div class="app-carousel-track" id="appCarouselTrack">
+
+            <!-- Card 1 -->
+            <article class="app-carousel-card">
+              <div class="app-carousel-card-icon">
+                <!-- Flat Map-pin Icon -->
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+              </div>
+              <h3 class="app-carousel-card-title">Acompanhe de qualquer lugar</h3>
+              <p class="app-carousel-card-desc">Receba alertas, consulte editais e veja suas oportunidades favoritas
+                onde quer que você esteja.</p>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="app-carousel-card">
+              <div class="app-carousel-card-icon">
+                <!-- Flat Lightning Icon -->
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                </svg>
+              </div>
+              <h3 class="app-carousel-card-title">Tempo real, sem exceção</h3>
+              <p class="app-carousel-card-desc">Qualquer atualização, como novo edital, prazo chegando ou fornecedor
+                disponível, aparece simultaneamente no app e na web.</p>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="app-carousel-card">
+              <div class="app-carousel-card-icon">
+                <!-- Flat Brain/Mind Icon -->
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1 0-3.12 3 3 0 0 1 0-4.88 2.5 2.5 0 0 1 0-3.12A2.5 2.5 0 0 1 9.5 2zM14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 0-3.12 3 3 0 0 0 0-4.88 2.5 2.5 0 0 0 0-3.12A2.5 2.5 0 0 0 14.5 2z" />
+                </svg>
+              </div>
+              <h3 class="app-carousel-card-title">Inteligência no bolso</h3>
+              <p class="app-carousel-card-desc">Analise um edital, faça perguntas e receba o checklist de participação
+                direto pelo celular, sem precisar abrir o computador.</p>
+            </article>
+
+          </div>
         </div>
 
-        <div class="flow-grid">
-          <article class="flow-card">
-            <div class="flow-number">01</div>
-            <h3>Monitoramento contínuo</h3>
-            <p>Nossa IA varre o PNCP, o Diário Oficial e portais públicos 24 horas por dia. Nenhum edital do seu segmento passa despercebido.</p>
-          </article>
+        <!-- Setas de Controle do Carrossel -->
+        <button class="carousel-arrow prev" id="carouselPrev" aria-label="Slide anterior">
+          <svg viewBox="0 0 24 24">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <button class="carousel-arrow next" id="carouselNext" aria-label="Próximo slide">
+          <svg viewBox="0 0 24 24">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
 
-          <article class="flow-card">
-            <div class="flow-number">02</div>
-            <h3>Filtro inteligente</h3>
-            <p>Filtramos por objeto, região, valor estimado e histórico de resultado. Você recebe só o que tem aderência real com o seu negócio.</p>
-          </article>
+        <!-- Dots de Progresso -->
+        <div class="carousel-dots" id="carouselDots"></div>
+      </div>
 
-          <article class="flow-card">
-            <div class="flow-number">03</div>
-            <h3>Análise do edital</h3>
-            <p>A IA lê o edital completo, identifica riscos, exigências técnicas, prazos críticos e gera um resumo executivo em minutos.</p>
-          </article>
-
-          <article class="flow-card">
-            <div class="flow-number">04</div>
-            <h3>Alerta no momento certo</h3>
-            <p>Push, e-mail e WhatsApp quando surgir uma oportunidade relevante, quando um prazo estiver se aproximando ou quando um edital for atualizado.</p>
-          </article>
-
-          <article class="flow-card">
-            <div class="flow-number">05</div>
-            <h3>Conexão com fornecedor</h3>
-            <p>Quando precisar formar preço, o Licitaí encontra fornecedores qualificados do seu segmento e região. Você negocia direto, sem intermediários.</p>
-          </article>
-        </div>
+      <div class="app-closing-line">
+        * Sincronização automática em tempo real, sempre. *
+      </div>
       </div>
     </section>
 
-    <section class="features-section" id="recursos">
-      <div class="container">
-        <div class="section-header">
-          <div class="badge-kicker eyebrow-gap">Recursos</div>
-          <h2 class="title-lg">Tudo que você precisa para operar com inteligência</h2>
-        </div>
-
-        <div class="features-grid">
-          <article class="feature-card">
-            <span class="feature-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <circle cx="11" cy="11" r="7" />
-                <path d="m16 16 4 4" />
-              </svg>
-            </span>
-            <h3>Busca avançada no PNCP</h3>
-            <p>Filtros por objeto, modalidade, órgão, UF, valor e prazo. Resultados em segundos.</p>
-          </article>
-
-          <article class="feature-card">
-            <span class="feature-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <rect x="5" y="7" width="14" height="12" rx="3" />
-                <path d="M12 3v4" />
-                <path d="M9 12h.01" />
-                <path d="M15 12h.01" />
-                <path d="M9 16h6" />
-              </svg>
-            </span>
-            <h3>Análise IA de edital</h3>
-            <p>Resumo executivo, identificação de riscos, exigências técnicas e pontos de atenção gerados automaticamente.</p>
-          </article>
-
-          <article class="feature-card">
-            <span class="feature-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M5 5h14v10H8l-3 4V5Z" />
-                <path d="M9 9h6" />
-                <path d="M9 12h4" />
-              </svg>
-            </span>
-            <h3>Chat sobre o edital</h3>
-            <p>Pergunte qualquer coisa sobre o edital em linguagem natural. A IA responde com base no documento oficial.</p>
-          </article>
-
-          <article class="feature-card">
-            <span class="feature-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="m12 4 2.4 5 5.6.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.6-.8L12 4Z" />
-              </svg>
-            </span>
-            <h3>Favoritos e monitoramento</h3>
-            <p>Salve oportunidades, acompanhe atualizações e organize por status: em análise, em preparação, enviado, ganho.</p>
-          </article>
-
-          <article class="feature-card">
-            <span class="feature-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
-                <path d="M10 21h4" />
-              </svg>
-            </span>
-            <h3>Push inteligente</h3>
-            <p>Alertas de prazo, atualização de edital, match urgente e resultado da licitação no app e no WhatsApp.</p>
-          </article>
-
-          <article class="feature-card">
-            <span class="feature-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M8 5h8" />
-                <path d="M9 3h6v4H9z" />
-                <path d="M6 5H5v16h14V5h-1" />
-                <path d="m8 13 2 2 5-5" />
-                <path d="M8 18h8" />
-              </svg>
-            </span>
-            <h3>Checklist de participação</h3>
-            <p>Guia passo a passo para preparar a proposta corretamente e não perder por erro documental.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
+    <!-- SEÇÃO 5: PLANOS -->
     <section class="plans-section" id="planos">
       <div class="container">
-        <div class="section-header">
-          <div class="badge-kicker eyebrow-gap">Planos</div>
+        <div class="section-header-centered">
+          <div class="badge-kicker">Planos</div>
           <h2 class="title-lg">Comece grátis. Escale quando precisar.</h2>
-          <p class="text-lead">
-            Do primeiro edital até operações de alto volume, o Licitaí acompanha o seu crescimento.
+          <p class="text-lead">Do primeiro edital até operações de alto volume, o Licitaí acompanha o seu crescimento.
           </p>
+        </div>
+
+        <!-- Selector de Planos no Mobile (Abas) -->
+        <div class="plans-mobile-tabs" aria-label="Abas de Planos">
+          <button class="plan-tab-btn" data-plan-index="0">Free</button>
+          <button class="plan-tab-btn" data-plan-index="1">Start</button>
+          <button class="plan-tab-btn active" data-plan-index="2">Pro <span class="fire-icon" aria-hidden="true"><svg
+                viewBox="0 0 24 24" width="14" height="14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C12 2 8 7 8 11a4 4 0 0 0 8 0c0-1.5-.8-2.8-2-3.5C14.5 9 14 10 12 11c0-2-1-4.5 0-9Z"
+                  fill="#ff6b2b" />
+                <path
+                  d="M10 13c0 1.1.9 2 2 2s2-.9 2-2c0-.8-.4-1.4-1-1.8.1.5-.1 1.1-.5 1.4C12.2 12.8 12 12.4 12 12c-.5.3-2 .5-2 1Z"
+                  fill="#ffb347" />
+              </svg></span></button>
+          <button class="plan-tab-btn" data-plan-index="3">Plus</button>
         </div>
 
         <div class="plans-grid">
-          <article class="plan-card">
+          <!-- Plano Free -->
+          <article class="plan-card" data-plan-card="0">
             <div class="plan-name">Free</div>
             <h3 class="plan-price">Grátis</h3>
             <p class="plan-promise">"Explore o mercado antes de comprometer."</p>
             <ul class="plan-list">
               <li>Busca rápida no PNCP</li>
-              <li>Filtros básicos</li>
-              <li>Visualização de detalhes principais</li>
-              <li>5 favoritos</li>
-              <li>1 análise IA por mês</li>
+              <li>Filtros básicos de busca</li>
+              <li>Visualização de detalhes</li>
+              <li>Até 5 favoritos ativos</li>
+              <li>1 análise com nossa inteligência por mês</li>
               <li>5 perguntas no chat</li>
-              <li>Somente web</li>
+              <li>Acesso somente web</li>
             </ul>
-            <a href="#cta-final" class="btn btn-secondary">Começar grátis</a>
+            <a href="#cadastro" class="btn btn-secondary">Começar grátis</a>
           </article>
 
-          <article class="plan-card">
+          <!-- Plano Start -->
+          <article class="plan-card" data-plan-card="1">
             <div class="plan-name">Start</div>
             <h3 class="plan-price">R$ 67/mês</h3>
             <p class="plan-promise">"Organize suas oportunidades e não perca mais prazos."</p>
             <ul class="plan-list">
-              <li>Tudo do Free</li>
+              <li>Tudo do plano Free</li>
               <li>Acesso web completo</li>
-              <li>App mobile limitado</li>
-              <li>Favoritos e monitoramento ilimitados</li>
+              <li>App mobile (limitações)</li>
+              <li>Favoritos ilimitados</li>
               <li>Push de alertas de prazo</li>
-              <li>8 análises IA por mês</li>
-              <li>30 perguntas mensais no chat</li>
+              <li>8 análises com nossa inteligência por mês</li>
+              <li>30 perguntas no chat</li>
             </ul>
-            <a href="#cta-final" class="btn">Assinar Start</a>
+            <a href="#cadastro" class="btn">Assinar Start</a>
           </article>
 
-          <article class="plan-card popular">
+          <!-- Plano Pro -->
+          <article class="plan-card popular" data-plan-card="2">
             <span class="popular-badge">Mais popular</span>
             <div class="plan-name">Pro</div>
+            <div class="plan-trial-tag">
+              <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#4a9e36">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+              30 dias grátis
+            </div>
             <h3 class="plan-price">R$ 197/mês</h3>
             <p class="plan-promise">"O Licitaí acompanha, analisa e avisa tudo em tempo real."</p>
             <ul class="plan-list">
-              <li>Tudo do Start</li>
-              <li>App completo com todas as funcionalidades</li>
+              <li>Tudo do plano Start</li>
+              <li>App mobile completo</li>
               <li>Chat ativo no app</li>
-              <li>Análise IA no app</li>
-              <li>Checklist completo no app</li>
-              <li>50 análises IA por mês</li>
+              <li>Análise inteligente no app</li>
+              <li>Checklist no app</li>
+              <li>50 análises com nossa inteligência por mês</li>
               <li>300 perguntas mensais</li>
-              <li>Push completo: prazo, match urgente, atualização, resultado</li>
+              <li>Push completo ativo</li>
               <li>Prioridade de processamento</li>
             </ul>
-            <a href="#cta-final" class="btn">Assinar Pro</a>
+            <a href="#cadastro" class="btn">Assinar Pro</a>
           </article>
 
-          <article class="plan-card">
+          <!-- Plano Plus -->
+          <article class="plan-card" data-plan-card="3">
             <div class="plan-name">Plus</div>
             <h3 class="plan-price">R$ 397/mês</h3>
             <p class="plan-promise">"Para operações com alto volume que não podem errar."</p>
             <ul class="plan-list">
-              <li>Tudo do Pro</li>
-              <li>150 análises IA por mês</li>
+              <li>Tudo do plano Pro</li>
+              <li>150 análises com nossa inteligência por mês</li>
               <li>1.000 perguntas mensais</li>
-              <li>Limites ampliados de favoritos e monitoramento</li>
-              <li>Prioridade máxima de processamento</li>
+              <li>Limites estendidos</li>
+              <li>Prioridade máxima de fila</li>
               <li>Exportações e relatórios</li>
-              <li>Acesso ampliado a cotações e parceiros</li>
+              <li>Acesso a parceiros</li>
             </ul>
-            <a href="#cta-final" class="btn">Assinar Plus</a>
+            <a href="#cadastro" class="btn">Assinar Plus</a>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="social-section" id="prova-social">
+    <!-- SEÇÃO 6: PROVA SOCIAL -->
+    <section class="prova-social-section" id="prova-social">
+      <div class="prova-social-container">
+        <div class="prova-social-number">1.200+</div>
+        <h2 class="prova-social-title">Você não vai ser o primeiro.</h2>
+        <p class="prova-social-desc">
+          Mais de 1.200 licitantes já estão cadastrados e na fila de acesso antecipado ao Licitaí, de pequenos
+          escritórios a grandes construtoras e distribuidoras.
+        </p>
+        <p class="prova-social-desc" style="margin-top: -12px; color: #94a3b8;">
+          A plataforma está liberando o acesso em lotes semanais estruturados. Os primeiros usuários a se cadastrarem
+          terão prioridade máxima de ativação.
+        </p>
+        <a href="#cadastro" class="cta-scroll-link">Garantir acesso antecipado</a>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 7: BENEFÍCIOS & CADASTRO -->
+    <section id="beneficios">
       <div class="container">
-        <div class="section-header">
-          <h2 class="title-lg">Quem já está dentro</h2>
-        </div>
-        <div class="social-card">
-          <p>
-            <strong>[X]+ licitantes já estão na fila de acesso</strong> de empresas iniciantes a operações
-            com dezenas de editais ativos por mês.
-          </p>
-          <p>
-            A plataforma está em fase de acesso antecipado. Os primeiros usuários terão condições especiais
-            de lançamento.
-          </p>
-          <a href="#planos" class="btn">Garantir acesso antecipado →</a>
+        <div class="solution-grid">
+
+          <!-- Vantagens à Esquerda -->
+          <div class="benefits-slider-container">
+            <div class="section-header-left" style="margin-bottom: 48px;">
+              <div class="badge-kicker" style="margin-bottom: 16px;">Vantagens</div>
+              <h2 class="title-lg"
+                style="font-size: clamp(28px, 3.5vw, 38px); font-weight: 850; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 16px;">
+                Opere com alta precisão e sem retrabalho.
+              </h2>
+              <p class="text-lead" style="font-size: 16px; color: #6b7280;">
+                Deixe a triagem e a leitura exaustiva de documentos por conta da nossa inteligência e foque na
+                estratégia comercial.
+              </p>
+            </div>
+
+            <div class="benefits-list" id="benefitsSlider">
+              <!-- Benefício 1 -->
+              <article class="benefit-item">
+                <div class="benefit-icon">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="benefit-title">Economia real de tempo</h3>
+                  <p class="benefit-desc">Reduza em até 90% o tempo de triagem de editais abertos no PNCP e leia o
+                    essencial em segundos.</p>
+                </div>
+              </article>
+
+              <!-- Benefício 2 -->
+              <article class="benefit-item">
+                <div class="benefit-icon">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="benefit-title">Zero prazos perdidos</h3>
+                  <p class="benefit-desc">Alertas push no app garantem que você nunca perca o prazo para enviar sua
+                    proposta, mesmo com o celular bloqueado.</p>
+                </div>
+              </article>
+
+              <!-- Benefício 3 -->
+              <article class="benefit-item">
+                <div class="benefit-icon">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="benefit-title">Segurança jurídica</h3>
+                  <p class="benefit-desc">A inteligência artificial lê e identifica cláusulas abusivas, exigências
+                    incomuns e riscos no edital.</p>
+                </div>
+              </article>
+
+              <!-- Benefício 4 -->
+              <article class="benefit-item">
+                <div class="benefit-icon">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 11l3 3L22 4" />
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="benefit-title">Checklist documental completo</h3>
+                  <p class="benefit-desc">Um roteiro claro e prático gerado com nossa inteligência com todas as
+                    certidões e qualificações necessárias para evitar inabilitação.</p>
+                </div>
+              </article>
+
+              <!-- Benefício 5: Conexão com Fornecedores -->
+              <article class="benefit-item">
+                <div class="benefit-icon">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="benefit-title">Conexão direta com fornecedores</h3>
+                  <p class="benefit-desc">Conectamos você a fornecedores parceiros do seu segmento e região para formar
+                    preço rapidamente e montar uma proposta competitiva.</p>
+                </div>
+              </article>
+
+            </div>
+
+            <!-- Dots de Navegação Mobile -->
+            <div class="benefits-dots" aria-hidden="true">
+              <button class="benefit-dot active" aria-label="Slide 1"></button>
+              <button class="benefit-dot" aria-label="Slide 2"></button>
+              <button class="benefit-dot" aria-label="Slide 3"></button>
+              <button class="benefit-dot" aria-label="Slide 4"></button>
+              <button class="benefit-dot" aria-label="Slide 5"></button>
+            </div>
+          </div>
+
+          <!-- Formulário à Direita -->
+          <div class="form-container-card" id="cadastro">
+            <h3 class="form-card-title">Seja um licitante pioneiro</h3>
+            <p class="form-card-subtitle">Entre na lista de espera e receba alertas push de editais e prazos direto no
+              app.</p>
+
+            <form id="supplierLeadForm">
+              <div class="form-step active" id="formStep1">
+                <div class="form-field">
+                  <label for="nome">Nome</label>
+                  <input id="nome" name="nome" type="text" placeholder="Seu nome completo" required
+                    autocomplete="name" />
+                </div>
+                <div class="form-field">
+                  <label for="email">E-mail</label>
+                  <input id="email" name="email" type="email" placeholder="nome@suaempresa.com.br" required
+                    autocomplete="email" />
+                </div>
+                <div class="form-field">
+                  <label for="telefone">WhatsApp</label>
+                  <input id="telefone" name="telefone" type="tel" placeholder="(11) 99999-0000" required
+                    autocomplete="tel" />
+                </div>
+
+                <button class="form-submit" type="submit" id="btnSubmitForm">Reservar minha vaga</button>
+
+                <div
+                  style="text-align: center; color: #94a3b8; font-size: 12px; font-weight: 500; font-family: var(--font-sans); margin-top: 4px;">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"
+                    style="vertical-align: -1px; margin-right: 4px; display: inline-block; color: var(--green-strong);">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                  Garantia de privacidade &middot; Sem spam
+                </div>
+              </div>
+
+              <div class="form-status" role="status" aria-live="polite"></div>
+            </form>
+
+            <!-- Tela de Sucesso -->
+            <div id="formSuccessScreen"
+              style="display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 48px 16px; animation: enterUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;">
+              <div
+                style="width: 80px; height: 80px; border-radius: 50%; background: rgba(197, 242, 157, 0.1); border: 2px solid var(--green-strong); display: flex; align-items: center; justify-content: center; margin-bottom: 28px; box-shadow: 0 0 30px rgba(197, 242, 157, 0.25);">
+                <svg viewBox="0 0 24 24" width="40" height="40" stroke="var(--green-strong)" stroke-width="3"
+                  fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <div
+                style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--green-strong); margin-bottom: 12px;">
+                Cadastro confirmado</div>
+              <h3
+                style="color: #ffffff; font-size: 22px; font-weight: 850; letter-spacing: -0.5px; margin-bottom: 12px; line-height: 1.25;">
+                Você está na lista! 🎉</h3>
+              <p style="color: #cbd5e1; font-size: 15px; line-height: 1.65; max-width: 300px; font-weight: 500;">
+                Em breve entraremos em contato para liberar seu acesso à plataforma.
+              </p>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
 
+    <!-- SEÇÃO 8: FAQ -->
     <section class="faq-section" id="faq">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header-centered">
           <h2 class="title-lg">Perguntas frequentes</h2>
         </div>
 
         <div class="faq-list">
           <details class="faq-item" open>
             <summary>Preciso saber participar de licitações para usar o Licitaí?</summary>
-            <p>Não. A plataforma foi desenhada também para quem está começando. A IA explica o edital, o checklist guia o processo e o suporte está disponível para dúvidas.</p>
+            <p>Não. A plataforma foi desenhada também para quem está começando. Nossa inteligência explica o edital, o
+              checklist guia o processo e o suporte está disponível para esclarecer suas principais dúvidas.</p>
           </details>
 
           <details class="faq-item">
             <summary>O Licitaí participa das licitações por mim?</summary>
-            <p>Não. O Licitaí é uma plataforma de inteligência: ela monitora, analisa e organiza. A participação e a proposta são sempre suas.</p>
+            <p>Não. O Licitaí é uma plataforma de inteligência: ela monitora, analisa e organiza os dados. A
+              participação e a proposta comercial enviada são sempre suas.</p>
           </details>
 
           <details class="faq-item">
             <summary>Posso cancelar a qualquer momento?</summary>
-            <p>Sim. Não há fidelidade. Você cancela quando quiser, sem multa.</p>
+            <p>Sim. Não há fidelidade. Você cancela quando quiser na sua área de cliente ou através do nosso suporte,
+              sem multa contratual.</p>
           </details>
 
           <details class="faq-item">
             <summary>O plano Free tem limite de tempo?</summary>
-            <p>Não. O Free é permanente. Você só precisa fazer upgrade quando quiser mais análises, mais perguntas ou acesso ao app completo.</p>
+            <p>Não. O plano Free é permanente. Você só precisa fazer upgrade quando quiser obter mais análises
+              inteligentes, mais perguntas em nosso chat ou acesso ao aplicativo mobile completo.</p>
           </details>
 
           <details class="faq-item">
-            <summary>Como funciona a conexão com fornecedores?</summary>
-            <p>Quando você precisar formar preço, o Licitaí identifica fornecedores cadastrados no seu segmento e região e facilita o contato direto, sem intermediários.</p>
+            <summary>Como funciona a cotação e fornecedores?</summary>
+            <p>Quando você precisar formar preço para disputar um edital, o Licitaí identifica fornecedores parceiros
+              cadastrados que atendem ao segmento e região, facilitando o contato direto, sem intermediários.</p>
           </details>
-        </div>
-      </div>
-    </section>
-
-    <section class="final-cta" id="cta-final">
-      <div class="container">
-        <h2 class="title-lg">Seu próximo contrato público começa aqui.</h2>
-        <p class="text-lead">Comece grátis hoje. Sem cartão, sem compromisso.</p>
-        <div class="final-actions">
-          <a href="#planos" class="btn">Criar minha conta grátis</a>
-          <a href="#planos" class="final-link">Ver planos →</a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <img class="footer-logo" src="./brand/licitai_branca.png" alt="Licitaí" />
-      <span>Licitaí · Inteligência para licitantes conectada ao PNCP</span>
+  <!-- RODAPÉ (FOOTER) -->
+  <footer class="site-footer" aria-label="Rodapé Licitaí">
+    <div class="footer-container">
+      <div class="footer-grid">
+
+        <!-- Bloco da Marca -->
+        <div class="footer-brand">
+          <img class="footer-logo" src="./brand/licitai_branca.png" alt="Licitaí" />
+          <p>Plataforma de inteligência artificial aplicada ao monitoramento e análise de licitações públicas conectada
+            ao PNCP em tempo real.</p>
+        </div>
+
+        <!-- Coluna Links Rápidos -->
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul class="footer-links-list">
+            <li><a href="#porque-licitai" class="footer-link">O Licitaí</a></li>
+            <li><a href="#como-funciona" class="footer-link">Como funciona</a></li>
+            <li><a href="#planos" class="footer-link">Planos</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna Institucional -->
+        <div class="footer-col">
+          <h4>Institucional</h4>
+          <ul class="footer-links-list">
+            <li><a href="https://licitai.net/privacidade" class="footer-link">Privacidade</a></li>
+            <li><a href="https://licitai.net/termos" class="footer-link">Termos de Uso</a></li>
+            <li><a href="https://licitai.net/contato" class="footer-link">Contato</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna Redes Sociais -->
+        <div class="footer-col">
+          <h4>Siga a Licitaí</h4>
+          <div class="social-row">
+            <!-- LinkedIn -->
+            <a href="https://linkedin.com/company/licitai" target="_blank" rel="noopener noreferrer" class="social-link"
+              aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+              </svg>
+            </a>
+            <!-- Instagram -->
+            <a href="https://instagram.com/licitai_" target="_blank" rel="noopener noreferrer" class="social-link"
+              aria-label="Instagram">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Direitos Autorais -->
+      <div class="footer-bottom">
+        <span>© 2026 Licitaí. Todos os direitos reservados.</span>
+        <span class="highlight">Inteligência para Licitantes Conectada ao PNCP</span>
+      </div>
     </div>
   </footer>
 
+  <!-- JAVASCRIPT DE SUPORTES E SUPABASE -->
   <script>
+    // 📡 MOTOR DE SIMULAÇÃO DO RADAR DINÂMICO
+    (function () {
+      const sweepEl = document.getElementById("radarSweepElement");
+      const containerEl = document.getElementById("radarDotsContainer");
+      if (!sweepEl || !containerEl) return;
+
+      let sweepAngle = 0;
+      const sweepSpeed = 1.2;
+      const dotCount = 5;
+      const dots = [];
+
+      for (let i = 0; i < dotCount; i++) {
+        const theta = (i * (360 / dotCount) + Math.random() * 30) % 360;
+        const r = 0.3 + Math.random() * 0.5;
+
+        const el = document.createElement("div");
+        el.className = "radar-dot";
+        containerEl.appendChild(el);
+
+        dots.push({
+          el: el,
+          theta: theta,
+          r: r,
+          intensity: 0,
+          hasBeenScanned: false
+        });
+
+        updateDotPosition(dots[i]);
+      }
+
+      function updateDotPosition(dot) {
+        const maxRadiusPercent = 46;
+        const radiusPct = dot.r * maxRadiusPercent;
+
+        const rad = (dot.theta - 90) * Math.PI / 180;
+        const x = 50 + radiusPct * Math.cos(rad);
+        const y = 50 + radiusPct * Math.sin(rad);
+
+        dot.el.style.left = `${x.toFixed(2)}%`;
+        dot.el.style.top = `${y.toFixed(2)}%`;
+      }
+
+      function tick() {
+        sweepAngle = (sweepAngle + sweepSpeed) % 360;
+        sweepEl.style.transform = `rotate(${sweepAngle}deg)`;
+
+        for (let i = 0; i < dots.length; i++) {
+          const dot = dots[i];
+          const diff = (sweepAngle - dot.theta + 360) % 360;
+
+          if (diff >= 0 && diff <= 90) {
+            dot.intensity = 1.0 - (diff / 90);
+            dot.hasBeenScanned = true;
+          } else {
+            dot.intensity = 0;
+
+            if (dot.hasBeenScanned) {
+              dot.theta = (sweepAngle + 120 + Math.random() * 160) % 360;
+              dot.r = 0.25 + Math.random() * 0.55;
+              dot.hasBeenScanned = false;
+              updateDotPosition(dot);
+            }
+          }
+
+          if (dot.intensity > 0) {
+            const softOpacity = dot.intensity * 0.85;
+            dot.el.style.opacity = softOpacity.toFixed(2);
+            dot.el.style.transform = `translate(-50%, -50%) scale(${0.5 + 0.35 * dot.intensity})`;
+            dot.el.style.boxShadow = `0 0 ${Math.round(4 + 8 * dot.intensity)}px rgba(191, 241, 151, ${(0.3 + 0.6 * dot.intensity).toFixed(2)}), 0 0 ${Math.round(2 + 4 * dot.intensity)}px rgba(63, 126, 45, ${(0.15 + 0.15 * dot.intensity).toFixed(2)})`;
+          } else {
+            dot.el.style.opacity = "0";
+            dot.el.style.transform = "translate(-50%, -50%) scale(0)";
+          }
+        }
+
+        requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
+    })();
+
+    // Efeito no Header ao rolar
+    const siteHeader = document.getElementById("siteHeader");
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 50) {
+        siteHeader.classList.add("scrolled");
+      } else {
+        siteHeader.classList.remove("scrolled");
+      }
+    });
+
+    // Menu Mobile Toggle
     const menuToggle = document.getElementById("menuToggle");
     const menuOverlay = document.getElementById("menuOverlay");
-    const mobileLinks = document.querySelectorAll(".mobile-drawer a");
+    const mobileDrawer = document.getElementById("mobileDrawer");
+    const mobileLinks = mobileDrawer.querySelectorAll(".nav-link, .header-cta");
+
+    function toggleMenu() {
+      document.body.classList.toggle("menu-open");
+    }
 
     function closeMenu() {
       document.body.classList.remove("menu-open");
-      menuToggle?.setAttribute("aria-expanded", "false");
     }
 
-    menuToggle?.addEventListener("click", () => {
-      const isOpen = document.body.classList.toggle("menu-open");
-      menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle?.addEventListener("click", toggleMenu);
+    menuOverlay?.addEventListener("click", closeMenu);
+    mobileLinks.forEach(link => {
+      link.addEventListener("click", closeMenu);
     });
 
-    menuOverlay?.addEventListener("click", closeMenu);
-    mobileLinks.forEach((link) => link.addEventListener("click", closeMenu));
+    // 🗂️ PLANS MOBILE TABS SELECTOR + SWIPE
+    (function () {
+      const tabBtns = document.querySelectorAll(".plan-tab-btn");
+      const planCards = document.querySelectorAll(".plan-card[data-plan-card]");
+      const plansGrid = document.querySelector(".plans-grid");
+      if (!tabBtns.length || !planCards.length) return;
+
+      function isMobile() { return window.innerWidth <= 900; }
+
+      function activateTab(index) {
+        tabBtns.forEach(b => b.classList.remove("active"));
+        const targetBtn = [...tabBtns].find(b => parseInt(b.getAttribute("data-plan-index"), 10) === index);
+        if (targetBtn) targetBtn.classList.add("active");
+      }
+
+      function applyMobileTabState(activeIndex) {
+        if (!isMobile()) {
+          planCards.forEach(c => c.classList.remove("plan-card--hidden"));
+          return;
+        }
+        planCards.forEach(c => {
+          const idx = parseInt(c.getAttribute("data-plan-card"), 10);
+          if (idx === activeIndex) {
+            c.classList.remove("plan-card--hidden");
+            c.style.animation = "planFadeIn 0.3s ease forwards";
+          } else {
+            c.classList.add("plan-card--hidden");
+          }
+        });
+      }
+
+      // Default active = Pro (index 2)
+      let activeTabIndex = 2;
+      const totalPlans = tabBtns.length;
+
+      tabBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          activeTabIndex = parseInt(btn.getAttribute("data-plan-index"), 10);
+          activateTab(activeTabIndex);
+          applyMobileTabState(activeTabIndex);
+        });
+      });
+
+      // ↔ SWIPE on plans grid
+      if (plansGrid) {
+        let swipeStartX = 0;
+        let swipeStartY = 0;
+        let isSwiping = false;
+
+        plansGrid.addEventListener("touchstart", e => {
+          swipeStartX = e.touches[0].clientX;
+          swipeStartY = e.touches[0].clientY;
+          isSwiping = true;
+        }, { passive: true });
+
+        plansGrid.addEventListener("touchmove", e => {
+          if (!isSwiping) return;
+          const dx = e.touches[0].clientX - swipeStartX;
+          const dy = e.touches[0].clientY - swipeStartY;
+          // Only swipe if horizontal movement dominates
+          if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
+            e.preventDefault(); // prevent page scroll during horizontal swipe
+          }
+        }, { passive: false });
+
+        plansGrid.addEventListener("touchend", e => {
+          if (!isSwiping || !isMobile()) { isSwiping = false; return; }
+          const dx = swipeStartX - e.changedTouches[0].clientX;
+          const dy = swipeStartY - e.changedTouches[0].clientY;
+          isSwiping = false;
+          if (Math.abs(dx) < Math.abs(dy) || Math.abs(dx) < 40) return;
+          if (dx > 0) {
+            // swipe left → next plan
+            activeTabIndex = Math.min(activeTabIndex + 1, totalPlans - 1);
+          } else {
+            // swipe right → previous plan
+            activeTabIndex = Math.max(activeTabIndex - 1, 0);
+          }
+          activateTab(activeTabIndex);
+          applyMobileTabState(activeTabIndex);
+        }, { passive: true });
+      }
+
+      // Apply on load and on resize
+      applyMobileTabState(activeTabIndex);
+      window.addEventListener("resize", () => applyMobileTabState(activeTabIndex));
+    })();
+
+    // Sincronizar dots do slider de benefícios (Seção 7)
+    const benefitsSlider = document.getElementById("benefitsSlider");
+    const benefitDots = document.querySelectorAll(".benefit-dot");
+
+    if (benefitsSlider && benefitDots.length > 0) {
+      const updateActiveBenefitDot = () => {
+        const scrollLeft = benefitsSlider.scrollLeft;
+        const cardWidth = benefitsSlider.querySelector(".benefit-item").offsetWidth + 20;
+        const activeIndex = Math.round(scrollLeft / cardWidth);
+
+        benefitDots.forEach((dot, index) => {
+          dot.classList.toggle("active", index === activeIndex);
+        });
+      };
+
+      benefitsSlider.addEventListener("scroll", updateActiveBenefitDot);
+      benefitDots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          const cardWidth = benefitsSlider.querySelector(".benefit-item").offsetWidth + 20;
+          benefitsSlider.scrollTo({
+            left: index * cardWidth,
+            behavior: "smooth"
+          });
+        });
+      });
+    }
+
+    // Mostrar o botão do menu apenas a partir da Seção 2 (#porque-licitai)
+    const porqueLicitaiSection = document.getElementById("porque-licitai");
+    const headerCtaWrapper = document.querySelector(".header-cta-wrapper");
+
+    function checkHeaderCtaVisibility() {
+      if (!porqueLicitaiSection || !headerCtaWrapper) return;
+      const section2Top = porqueLicitaiSection.offsetTop - 120;
+      if (window.scrollY >= section2Top) {
+        headerCtaWrapper.classList.add("is-visible");
+      } else {
+        headerCtaWrapper.classList.remove("is-visible");
+      }
+    }
+
+    window.addEventListener("scroll", checkHeaderCtaVisibility);
+    window.addEventListener("resize", checkHeaderCtaVisibility);
+    checkHeaderCtaVisibility();
+
+    // Scroll suave para links de âncora
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener("click", function (e) {
+        const href = this.getAttribute("href");
+        if (href === "#") return;
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          const headerOffset = 90;
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
+        }
+      });
+    });
+    // 🎠 CARROSSEL DE TÓPICOS DA SEÇÃO WEB + APP
+    (function () {
+      const track = document.getElementById("appCarouselTrack");
+      const wrapper = document.getElementById("appCarouselWrapper");
+      const prevBtn = document.getElementById("carouselPrev");
+      const nextBtn = document.getElementById("carouselNext");
+      const dotsContainer = document.getElementById("carouselDots");
+      if (!track || !wrapper || !prevBtn || !nextBtn || !dotsContainer) return;
+
+      const cards = track.querySelectorAll(".app-carousel-card");
+      let currentIndex = 0;
+      let startX = 0;
+      let currentTranslate = 0;
+      let prevTranslate = 0;
+      let isDragging = false;
+      let autoplayTimer = null;
+
+      // Gerar os dots dinamicamente
+      cards.forEach((_, index) => {
+        const dot = document.createElement("div");
+        dot.className = `carousel-dot ${index === 0 ? "active" : ""}`;
+        dot.addEventListener("click", () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+      });
+      const dots = dotsContainer.querySelectorAll(".carousel-dot");
+
+      function updateCarousel() {
+        if (window.innerWidth > 900) {
+          track.style.transform = "none";
+          return;
+        }
+        const cardWidth = cards[0].offsetWidth;
+        const gap = 24;
+        const offset = currentIndex * (cardWidth + gap);
+        track.style.transform = `translate3d(${-offset}px, 0, 0)`;
+
+        // Atualizar estado das setas
+        prevBtn.classList.toggle("disabled", currentIndex === 0);
+        nextBtn.classList.toggle("disabled", currentIndex === cards.length - 1);
+
+        // Atualizar dots
+        dots.forEach((dot, index) => {
+          dot.classList.toggle("active", index === currentIndex);
+        });
+
+        prevTranslate = -offset;
+      }
+
+      function goToSlide(index) {
+        if (window.innerWidth > 900) return;
+        currentIndex = Math.max(0, Math.min(index, cards.length - 1));
+        updateCarousel();
+        resetAutoplay();
+      }
+
+      prevBtn.addEventListener("click", () => {
+        if (window.innerWidth > 900) return;
+        if (currentIndex > 0) goToSlide(currentIndex - 1);
+      });
+
+      nextBtn.addEventListener("click", () => {
+        if (window.innerWidth > 900) return;
+        if (currentIndex < cards.length - 1) {
+          goToSlide(currentIndex + 1);
+        } else {
+          goToSlide(0); // Voltar ao início ao final do autoplay
+        }
+      });
+
+      // Swipe Gestures para Mobile
+      wrapper.addEventListener("touchstart", dragStart, { passive: true });
+      wrapper.addEventListener("touchend", dragEnd);
+      wrapper.addEventListener("touchmove", dragAction, { passive: true });
+
+      wrapper.addEventListener("mousedown", dragStart);
+      wrapper.addEventListener("mouseup", dragEnd);
+      wrapper.addEventListener("mouseleave", dragEnd);
+      wrapper.addEventListener("mousemove", dragAction);
+
+      function dragStart(e) {
+        if (window.innerWidth > 900) return;
+        isDragging = true;
+        startX = getPositionX(e);
+        currentTranslate = prevTranslate;
+        track.style.transition = "none";
+        stopAutoplay();
+      }
+
+      function dragAction(e) {
+        if (!isDragging || window.innerWidth > 900) return;
+        const currentX = getPositionX(e);
+        const diffX = currentX - startX;
+        currentTranslate = prevTranslate + diffX;
+        track.style.transform = `translate3d(${currentTranslate}px, 0, 0)`;
+      }
+
+      function dragEnd() {
+        if (!isDragging || window.innerWidth > 900) return;
+        isDragging = false;
+        track.style.transition = "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)";
+
+        const movedBy = currentTranslate - prevTranslate;
+        const threshold = 50; // pixels mínimos para trocar
+
+        if (movedBy < -threshold && currentIndex < cards.length - 1) {
+          currentIndex += 1;
+        } else if (movedBy > threshold && currentIndex > 0) {
+          currentIndex -= 1;
+        }
+
+        goToSlide(currentIndex);
+        startAutoplay();
+      }
+
+      function getPositionX(e) {
+        return e.type.includes("mouse") ? e.clientX : e.touches[0].clientX;
+      }
+
+      // Autoplay
+      function startAutoplay() {
+        stopAutoplay();
+        if (window.innerWidth > 900) return; // Sem autoplay no desktop
+        autoplayTimer = setInterval(() => {
+          if (currentIndex < cards.length - 1) {
+            goToSlide(currentIndex + 1);
+          } else {
+            goToSlide(0);
+          }
+        }, 5000);
+      }
+
+      function stopAutoplay() {
+        if (autoplayTimer) clearInterval(autoplayTimer);
+      }
+
+      function resetAutoplay() {
+        stopAutoplay();
+        startAutoplay();
+      }
+
+      // Pausar no Hover (Desktop)
+      wrapper.addEventListener("mouseenter", stopAutoplay);
+      wrapper.addEventListener("mouseleave", startAutoplay);
+
+      // Iniciar
+      startAutoplay();
+      updateCarousel();
+
+      // Ajustar no resize
+      window.addEventListener("resize", updateCarousel);
+    })();
+
+    // INTEGRAÇÃO COM O SUPABASE — tabela: leads
+    const SUPABASE_URL = "https://mwdvvsbllhqrepngjkyn.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_mgxhku8IfwCIbwA2Rio9aQ_CuJKLnl0";
+    const supplierLeadForm = document.querySelector("#supplierLeadForm");
+    const supplierLeadStatus = supplierLeadForm?.querySelector(".form-status");
+    const btnSubmitForm = document.getElementById("btnSubmitForm");
+
+    function setSupplierStatus(message, type) {
+      if (!supplierLeadStatus) return;
+      supplierLeadStatus.textContent = message;
+      supplierLeadStatus.className = "form-status";
+      if (type === "success") supplierLeadStatus.classList.add("is-success");
+      else if (type === "error") supplierLeadStatus.classList.add("is-error");
+    }
+
+    supplierLeadForm?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      setSupplierStatus("", "");
+
+      if (!supplierLeadForm.reportValidity()) return;
+
+      const nomeVal = document.getElementById("nome")?.value.trim() || "";
+      const emailVal = document.getElementById("email")?.value.trim() || "";
+      const telVal = document.getElementById("telefone")?.value.trim() || "";
+
+      btnSubmitForm.disabled = true;
+      const originalText = btnSubmitForm.textContent;
+      btnSubmitForm.textContent = "Enviando...";
+
+      try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+          method: "POST",
+          headers: {
+            apikey: SUPABASE_KEY,
+            Authorization: `Bearer ${SUPABASE_KEY}`,
+            "Content-Type": "application/json",
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify({
+            nome: nomeVal,
+            email: emailVal,
+            whatsapp: telVal
+          })
+        });
+
+        if (!response.ok) {
+          let errText = `Status ${response.status}`;
+          try {
+            const errData = await response.json();
+            errText = errData.message || errData.hint || errText;
+          } catch (e) {
+            try { errText = await response.text() || errText; } catch (_) { }
+          }
+          throw new Error(errText);
+        }
+
+        // Disparar conversão Google Ads
+        if (typeof gtag === "function") {
+          gtag("event", "conversion", {
+            send_to: "AW-18156095563/-6E5CL-UtascEMuQwNFD",
+            value: 1.0,
+            currency: "BRL"
+          });
+        }
+
+        // Mostrar tela de sucesso
+        const cardTitle = document.querySelector(".form-card-title");
+        const cardSubtitle = document.querySelector(".form-card-subtitle");
+        if (cardTitle) cardTitle.style.display = "none";
+        if (cardSubtitle) cardSubtitle.style.display = "none";
+        if (supplierLeadForm) supplierLeadForm.style.display = "none";
+
+        const formSuccessScreen = document.getElementById("formSuccessScreen");
+        if (formSuccessScreen) formSuccessScreen.style.display = "flex";
+
+      } catch (error) {
+        console.error("Erro ao salvar lead:", error);
+        setSupplierStatus("Erro ao enviar. Revise os dados e tente novamente.", "error");
+      } finally {
+        btnSubmitForm.disabled = false;
+        btnSubmitForm.textContent = originalText;
+      }
+    });
   </script>
 </body>
 
