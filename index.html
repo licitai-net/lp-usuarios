@@ -12,6 +12,13 @@
     gtag('config', 'G-322R030GZ6');
     gtag('config', 'AW-18156095563');
   </script>
+  <script type="text/javascript">
+    (function (c, l, a, r, i, t, y) {
+      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+      t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+      y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", "ww3kobfpx8");
+  </script>
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -1402,6 +1409,15 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
+    }
+
+    .bot-field {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
     }
 
     .form-field label {
@@ -3610,6 +3626,11 @@
 
             <form id="supplierLeadForm">
               <div class="form-step active" id="formStep1">
+                <div class="bot-field" aria-hidden="true">
+                  <label for="website">Website</label>
+                  <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+                </div>
+
                 <div class="form-field">
                   <label for="nome">Nome</label>
                   <input id="nome" name="nome" type="text" placeholder="Seu nome completo" required
@@ -4203,6 +4224,12 @@
     const supplierLeadStatus = supplierLeadForm?.querySelector(".form-status");
     const btnSubmitForm = document.getElementById("btnSubmitForm");
     const GOOGLE_ADS_LEAD_CONVERSION_ID = "AW-18156095563/UrwiCOC2vLIcEMuQwNFD";
+    const formLoadedAt = Date.now();
+    let hasInteractedWithLeadForm = false;
+
+    supplierLeadForm?.addEventListener("input", () => {
+      hasInteractedWithLeadForm = true;
+    }, { once: true });
 
     function setSupplierStatus(message, type) {
       if (!supplierLeadStatus) return;
@@ -4236,6 +4263,13 @@
       const nomeVal = document.getElementById("nome")?.value.trim() || "";
       const emailVal = document.getElementById("email")?.value.trim() || "";
       const whatsappVal = document.getElementById("whatsapp")?.value.trim() || "";
+      const honeypotVal = document.getElementById("website")?.value.trim() || "";
+      const secondsSinceLoad = (Date.now() - formLoadedAt) / 1000;
+
+      if (honeypotVal || !hasInteractedWithLeadForm || secondsSinceLoad < 1.5) {
+        console.warn("Envio bloqueado por proteção anti-bot.");
+        return;
+      }
 
       btnSubmitForm.disabled = true;
       const originalText = btnSubmitForm.textContent;
