@@ -304,6 +304,10 @@
       right: 0;
     }
 
+    body.menu-open {
+      overflow: hidden;
+    }
+
     .mobile-drawer .nav-menu {
       flex-direction: column;
       align-items: flex-start;
@@ -1903,6 +1907,10 @@
         display: block;
       }
 
+      .mobile-drawer .nav-menu {
+        display: flex;
+      }
+
       .hero-section {
         padding-top: 120px;
       }
@@ -2883,9 +2891,9 @@
       </a>
 
       <ul class="nav-menu">
-        <li><a href="#como-funciona" class="nav-link">O Licitaí</a></li>
         <li><a href="#como-funciona" class="nav-link">Como funciona</a></li>
         <li><a href="#para-quem" class="nav-link">Para quem é</a></li>
+        <li><a href="#web-app" class="nav-link">App</a></li>
         <li><a href="#planos" class="nav-link">Planos</a></li>
         <li><a href="#faq" class="nav-link">FAQ</a></li>
       </ul>
@@ -2904,10 +2912,11 @@
 
   <nav class="mobile-drawer" id="mobileDrawer" aria-label="Menu mobile">
     <ul class="nav-menu">
-      <li><a href="#como-funciona" class="nav-link">O Licitaí</a></li>
       <li><a href="#como-funciona" class="nav-link">Como funciona</a></li>
       <li><a href="#para-quem" class="nav-link">Para quem é</a></li>
+      <li><a href="#web-app" class="nav-link">App</a></li>
       <li><a href="#planos" class="nav-link">Planos</a></li>
+      <li><a href="#beneficios" class="nav-link">Benefícios</a></li>
       <li><a href="#faq" class="nav-link">FAQ</a></li>
     </ul>
     <a href="#cadastro" class="header-cta">Quero meu acesso</a>
@@ -3717,9 +3726,12 @@
         <div class="footer-col">
           <h4>Navegação</h4>
           <ul class="footer-links-list">
-            <li><a href="#como-funciona" class="footer-link">O Licitaí</a></li>
             <li><a href="#como-funciona" class="footer-link">Como funciona</a></li>
+            <li><a href="#para-quem" class="footer-link">Para quem é</a></li>
+            <li><a href="#web-app" class="footer-link">App</a></li>
             <li><a href="#planos" class="footer-link">Planos</a></li>
+            <li><a href="#beneficios" class="footer-link">Benefícios</a></li>
+            <li><a href="#faq" class="footer-link">FAQ</a></li>
           </ul>
         </div>
 
@@ -3774,7 +3786,7 @@
       if (!sweepEl || !containerEl) return;
 
       let sweepAngle = 0;
-      const sweepSpeed = 1.2;
+      const sweepSpeed = 1.65;
       const dotCount = 5;
       const dots = [];
 
@@ -3865,11 +3877,13 @@
     const mobileLinks = mobileDrawer.querySelectorAll(".nav-link, .header-cta");
 
     function toggleMenu() {
-      document.body.classList.toggle("menu-open");
+      const isOpen = document.body.classList.toggle("menu-open");
+      menuToggle?.setAttribute("aria-expanded", String(isOpen));
     }
 
     function closeMenu() {
       document.body.classList.remove("menu-open");
+      menuToggle?.setAttribute("aria-expanded", "false");
     }
 
     menuToggle?.addEventListener("click", toggleMenu);
@@ -4188,6 +4202,7 @@
     const supplierLeadForm = document.querySelector("#supplierLeadForm");
     const supplierLeadStatus = supplierLeadForm?.querySelector(".form-status");
     const btnSubmitForm = document.getElementById("btnSubmitForm");
+    const GOOGLE_ADS_LEAD_CONVERSION_ID = "AW-18156095563/-6E5CL-UtascEMuQwNFD";
 
     function setSupplierStatus(message, type) {
       if (!supplierLeadStatus) return;
@@ -4195,6 +4210,21 @@
       supplierLeadStatus.className = "form-status";
       if (type === "success") supplierLeadStatus.classList.add("is-success");
       else if (type === "error") supplierLeadStatus.classList.add("is-error");
+    }
+
+    function trackLeadConversion() {
+      if (typeof gtag !== "function") return;
+
+      gtag("event", "conversion", {
+        send_to: GOOGLE_ADS_LEAD_CONVERSION_ID,
+        value: 1.0,
+        currency: "BRL"
+      });
+
+      gtag("event", "generate_lead", {
+        event_category: "form",
+        event_label: "lead_form"
+      });
     }
 
     supplierLeadForm?.addEventListener("submit", async (event) => {
@@ -4238,14 +4268,8 @@
           throw new Error(errText);
         }
 
-        // Disparar conversão Google Ads
-        if (typeof gtag === "function") {
-          gtag("event", "conversion", {
-            send_to: "AW-18156095563/-6E5CL-UtascEMuQwNFD",
-            value: 1.0,
-            currency: "BRL"
-          });
-        }
+        // Disparar conversão apenas depois de salvar o lead com sucesso.
+        trackLeadConversion();
 
         // Mostrar tela de sucesso
         const cardTitle = document.querySelector(".form-card-title");
